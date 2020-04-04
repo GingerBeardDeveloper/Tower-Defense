@@ -162,6 +162,10 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
 
+            // TODO: Draw the Path
+            Path path = new Path(context, mCanvas, mPaint);
+            path.drawPath();
+
             // TODO: Draw the User Interface Bar
            // mUserInterface.draw(mCanvas, mPaint);
 
@@ -173,13 +177,14 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // TODO: Draw the number of Lives left, the score
-           // mCanvas.drawText("Lives: " + 5, 20, 120, mPaint);
+            mCanvas.drawText("Lives: 5" , 20, 120, mPaint);
+            mCanvas.drawText("Gold: 500 pieces", 20, 300, mPaint);
 
             // TODO: Draw the User Interface Bar
             mUserInterface.draw(mCanvas, mPaint);
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
-            for(Tower t: listOfTowers) {
+          /*  for(Tower t: listOfTowers) {
                 t.draw(mCanvas, mPaint);
             }
 
@@ -187,8 +192,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             for(Enemy enemy: waveOfEnemies.get(currentWaveNumber)) {
                 enemy.draw(mCanvas, mPaint);
             }
-
-            // TODO: Draw the text for when the game is paused. Later
+            */
+            // TODO: Draw the text for when the game is paused
 
 
             // Unlock the mCanvas and reveal the graphics for this frame
