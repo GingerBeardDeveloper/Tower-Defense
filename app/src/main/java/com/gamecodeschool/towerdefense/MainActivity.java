@@ -2,7 +2,9 @@ package com.gamecodeschool.towerdefense;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
         display.getSize(size);
 
         // Create a new instance of the TowerGame class
-        mTowerGame = new TowerGame(this, size);
+        TowerDefenseGame mTowerDefenseGame = new TowerDefenseGame(this, size);
 
         // Make the towerDefense the view of the Activity
-        setContentView(R.layout.activity_main);
+        setContentView(mTowerDefenseGame);
     }
 }
