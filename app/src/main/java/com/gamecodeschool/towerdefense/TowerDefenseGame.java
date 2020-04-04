@@ -41,11 +41,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private boolean mPaused;
 
     // List of GameObjects
+    private int currentWaveNumber;
     private List<Tower> listOfTowers = new ArrayList<Tower>();
+    private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
+
 
     public TowerDefenseGame(Context context, Point size) {
         super(context);
         this.context = context;
+
         //Deals with the pixels for our mobile application
         // Work out how many pixels each block is
         blockSize = size.x / NUM_BLOCKS_WIDE;
@@ -54,6 +58,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         //Builds the UI according to size of screen...etc
         mUserInterface = new UserInterface(context, size);
+
+        //Builds the waveOfEnemiesList. Looks something like:
+        buildWaveOfEnemiesList();
 
         // TODO: Add Sound Strategy Later
 
@@ -64,6 +71,20 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
 
+    }
+
+    /* Builds the waveOfEnemiesList. Looks something like:
+    Wave 1: Basic Alien, Basic Alien, Basic Alien, Basic Alien, Basic Alien
+    Wave 2: Basic Alien, Basic Alien, Mid-Grade Alien, Basic Alien, Basic Alien
+    etc. */
+    private void buildWaveOfEnemiesList() {
+        Point start = new Point(0, 0);
+        ArrayList<Enemy> waveOne = new ArrayList<Enemy>();
+        waveOne.add(new BasicAlien(start));
+        waveOne.add(new BasicAlien(start));
+        waveOne.add(new BasicAlien(start));
+
+        this.waveOfEnemies.add(waveOne);
     }
 
     // Called to start a new game
@@ -119,8 +140,14 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
 
-        // TODO: Make all enemies move
+        // TODO: Make all enemies move while towers attack
+        for(Enemy enemy: waveOfEnemies.get(currentWaveNumber)) {
+            enemy.move();
+        }
 
+        for(Tower tower: listOfTowers) {
+            tower.attack();
+        }
 
         // TODO: If enemy reached the end of the static path, decrement userLives
 
@@ -157,9 +184,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
 
             // TODO: Draw the enemies
+            for(Enemy enemy: waveOfEnemies.get(currentWaveNumber)) {
+                enemy.draw(mCanvas, mPaint);
+            }
 
-
-            // TODO: Draw the text for when the game is paused
+            // TODO: Draw the text for when the game is paused. Later
 
 
             // Unlock the mCanvas and reveal the graphics for this frame
