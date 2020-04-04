@@ -1,5 +1,6 @@
 package com.gamecodeschool.towerdefense;
 
+import android.graphics.RectF;
 import android.view.SurfaceView;
 
 import android.content.Context;
@@ -13,7 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 class TowerDefenseGame extends SurfaceView implements Runnable {
@@ -34,20 +35,25 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private Paint mPaint;
 
 
-    // Attributes to deal with start/pause
+    // Attributes to deal with start/pause/UI
+    private UserInterface mUserInterface;
     private boolean mPlaying;
     private boolean mPaused;
 
+    // List of GameObjects
+    private List<Tower> listOfTowers = new ArrayList<Tower>;
 
     public TowerDefenseGame(Context context, Point size) {
         super(context);
         this.context = context;
-
         //Deals with the pixels for our mobile application
         // Work out how many pixels each block is
         blockSize = size.x / NUM_BLOCKS_WIDE;
         // How many blocks of the same size will fit into the height
         mNumBlocksHigh = size.y / blockSize;
+
+        //Builds the UI according to size of screen...etc
+        mUserInterface = new UserInterface(context, size);
 
         // TODO: Add Sound Strategy Later
 
@@ -62,8 +68,14 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
     // Called to start a new game
     public void newGame() {
+        // TODO: Reset the number of lives that the user has
 
+        // TODO: Set the user off with a specific amount of gold
 
+        // TODO: Reset the whole canvas
+
+        // Forces an update to be triggered
+        mNextFrameTime = System.currentTimeMillis();
     }
 
 
@@ -103,18 +115,17 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         return false;
     }
 
-    // Purpose of this method is to make all of the movable objects move
+    // Purpose of this method is to move all of the movable objects in the game
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
 
         // TODO: Make all enemies move
 
-        // TODO: If enemy reached the end, lower amt of userLives by 1
 
+        // TODO: If enemy reached the end of the static path, decrement userLives
 
 
         // TODO: If we ran out of Lives, then the user loses. End Game
-
 
     }
 
@@ -124,24 +135,29 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
 
-            // Fill the screen with a color
-            mCanvas.drawColor(Color.argb(255, 26, 128, 182));
+            // TODO: Draw the User Interface Bar
+           // mUserInterface.draw(mCanvas, mPaint);
 
+            // TODO: Make the background space-themed
+            // Fill the screen with a color
+            mCanvas.drawColor(Color.argb(50, 26, 128, 100));
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(120);
 
             // TODO: Draw the number of Lives left, the score
-            //mCanvas.drawText("" + mScore, 20, 120, mPaint);
+           // mCanvas.drawText("Lives: " + 5, 20, 120, mPaint);
+
+            // TODO: Draw the User Interface Bar
+            mUserInterface.draw(mCanvas, mPaint);
+
+            // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
+            for(Tower t: listOfTowers) {
+                t.draw();
+            }
 
             // TODO: Draw the enemies
-           /*
-            mApples.get(0).draw(mCanvas, mPaint);
-            for (int i = 0; i < mApples.size(); i++) {
-                mApples.get(i).draw(mCanvas, mPaint);
-            }
-            mSnake.draw(mCanvas, mPaint);
-            */
+
 
             // TODO: Draw the text for when the game is paused
 
