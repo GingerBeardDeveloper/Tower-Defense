@@ -18,12 +18,15 @@ import java.util.ArrayList;
 
 class TowerDefenseGame extends SurfaceView implements Runnable {
 
+    // Objects for the game loop/thread
+    private Thread mThread = null;
+    private long mNextFrameTime;
+
     // Attributes for pixels of the game
     Context context;
     int blockSize;
     private int mNumBlocksHigh;
     private final int NUM_BLOCKS_WIDE = 40;
-
 
     // Objects for drawing
     private Canvas mCanvas;
@@ -67,7 +70,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Handles the game loop
     @Override
     public void run() {
-        while (mPlaying) {
+        /*while (mPlaying) {
             if(!mPaused) {
                 // Update 10 times a second
                 if (updateRequired()) {
@@ -75,13 +78,28 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 }
             }
             draw();
+        }*/
+        while (mPlaying) {
+            draw();
         }
     }
 
     // Check to see if it is time for an update
     public boolean updateRequired() {
+        // Run at 10 frames per second
+        final long TARGET_FPS = 10;
+        // There are 1000 milliseconds in a second
+        final long MILLIS_PER_SECOND = 1000;
 
+        // Are we due to update the frame...Tenth of a second has passed
+        if (mNextFrameTime <= System.currentTimeMillis()) {
+            // Setup when the next update will be triggered
+            mNextFrameTime = System.currentTimeMillis()
+                             + MILLIS_PER_SECOND / TARGET_FPS;
 
+            // Return true so that the update and draw methods execute
+            return true;
+        }
         return false;
     }
 
@@ -139,4 +157,22 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         return true;
     }
     */
+
+    // Stop the thread
+    public void pause() {
+        mPlaying = false;
+        try {
+            mThread.join();
+        } catch (InterruptedException e) {
+            // Error
+        }
+    }
+
+
+    // Start the thread
+    public void resume() {
+        mPlaying = true;
+        mThread = new Thread(this);
+        mThread.start();
+    }
 }

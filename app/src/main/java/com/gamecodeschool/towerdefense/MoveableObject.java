@@ -19,6 +19,8 @@ abstract class MoveableObject extends GameObject {
         setLocation(new Point((int) dx, (int) dy));
     }
 
+    abstract void draw();
+
     /**
      * Rotates the heading of the MoveableObject
      * by adding to rotate left and subtracting to rotate right
