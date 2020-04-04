@@ -57,7 +57,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         mNumBlocksHigh = size.y / blockSize;
 
         //Builds the UI according to size of screen...etc
-        mUserInterface = new UserInterface(context, size);
+        //mUserInterface = new UserInterface(context, size);
 
         //Builds the waveOfEnemiesList. Looks something like:
         buildWaveOfEnemiesList();
@@ -166,9 +166,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             Path path = new Path(context, mCanvas, mPaint);
             path.drawPath();
 
-            // TODO: Draw the User Interface Bar
-           // mUserInterface.draw(mCanvas, mPaint);
-
             // TODO: Make the background space-themed
             // Fill the screen with a color
             mCanvas.drawColor(Color.argb(50, 26, 128, 100));
@@ -181,7 +178,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mCanvas.drawText("Gold: 500 pieces", 20, 300, mPaint);
 
             // TODO: Draw the User Interface Bar
-            mUserInterface.draw(mCanvas, mPaint);
+
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
           /*  for(Tower t: listOfTowers) {

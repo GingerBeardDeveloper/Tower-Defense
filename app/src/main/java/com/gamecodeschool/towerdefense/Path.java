@@ -25,7 +25,7 @@ public class Path {
     public void drawPath() {
         paint.setColor(Color.BLACK);
 
-        canvas.drawText("INSERT PATH", 150, 700, paint);
+        canvas.drawText("This is the Path obj", 50, 700, paint);
     }
 
 }
