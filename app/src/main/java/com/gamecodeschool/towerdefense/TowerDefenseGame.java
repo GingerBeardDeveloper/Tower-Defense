@@ -41,7 +41,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private boolean mPaused;
 
     // List of GameObjects
-    private List<Tower> listOfTowers = new ArrayList<Tower>;
+    private List<Tower> listOfTowers = new ArrayList<Tower>();
 
     public TowerDefenseGame(Context context, Point size) {
         super(context);
@@ -153,7 +153,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
             for(Tower t: listOfTowers) {
-                t.draw();
+                t.draw(mCanvas, mPaint);
             }
 
             // TODO: Draw the enemies

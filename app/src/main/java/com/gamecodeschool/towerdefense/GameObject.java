@@ -15,7 +15,7 @@ abstract class GameObject {
         this.location = location;
     }
 
-    abstract void draw();
+    abstract void draw(Canvas canvas, Paint paint);
 
     public float getSize() {
         return mSize;
