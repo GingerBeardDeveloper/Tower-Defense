@@ -7,6 +7,11 @@ abstract class GameObject {
     private float size;
     private Point location;
 
+    public GameObject(Point initialLocation, float initialSize) {
+        size = initialSize;
+        location = initialLocation;
+    }
+
 
     public float getSize() {
         return size;
