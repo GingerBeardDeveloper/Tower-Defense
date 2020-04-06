@@ -2,6 +2,8 @@ package com.gamecodeschool.towerdefense;
 
 // The most basic enemy in the 'Invasion Earth' Model
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 
 public class BasicAlien extends Enemy {
@@ -15,5 +17,10 @@ public class BasicAlien extends Enemy {
 
     public void move() {
         super.move();
+    }
+
+    @Override
+    public void draw(Canvas mCanvas, Paint paint) {
+
     }
 }

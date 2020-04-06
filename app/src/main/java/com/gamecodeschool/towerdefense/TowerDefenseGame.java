@@ -68,6 +68,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         // TODO: Insert Game Objects Initialization Here
 
+        mUserInterface = new UserInterface();
+
 
         // Initialize the drawing objects for the visuals of the game
         mSurfaceHolder = getHolder();
@@ -176,8 +178,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // TODO: Draw the number of Lives left, the score
-            mCanvas.drawText("Lives: 5" , 20, 120, mPaint);
-            mCanvas.drawText("Gold: 500 pieces", 20, 300, mPaint);
+            mUserInterface.draw(mCanvas, mPaint);
 
             // TODO: Draw the User Interface Bar
 

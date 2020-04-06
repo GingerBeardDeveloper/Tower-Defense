@@ -13,9 +13,10 @@ public class MachineGunTower extends Tower {
         this.speed = 20;
     }
 
-    void draw(Canvas canvas, Paint paint) {
-        canvas.drawBitmap(mBitmap,
-                location.x * mSize, location.y * mSize, paint);
+    @Override
+    void draw(Canvas mCanvas, Paint mPaint) {
+        // mCanvas.drawBitmap(mBitmap, location.x * mSize, location.y * mSize, mPaint);
+        mCanvas.drawRect(location.x - 20, location.y - 20, location.x + 20, location.y + 20, mPaint);
     }
 
     // Send a new projectile in the air

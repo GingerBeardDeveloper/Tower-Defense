@@ -12,6 +12,7 @@ import android.graphics.RectF;
 public class UserInterface {
 
     int lives, gold;
+    int height, width;
 
     public UserInterface() {
 
@@ -19,6 +20,10 @@ public class UserInterface {
 
     public void draw(Canvas mCanvas, Paint mPaint) {
         // TODO: create ui box on right side of screen
+        height = mCanvas.getHeight();
+        width = mCanvas.getWidth();
+        // Draw rectangle on right 20% of screen for UI
+        mCanvas.drawRect(width, height, (float) (width * 0.8), 0, mPaint);
         mCanvas.drawText("Lives: 5" , 20, 120, mPaint);
         mCanvas.drawText("Gold: 500 pieces", 20, 300, mPaint);
     }
