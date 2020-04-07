@@ -48,7 +48,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
     // List of GameObjects
     private int currentWaveNumber;
-    private List<Tower> listOfTowers = new ArrayList<Tower>();
+    private List<Tower> listOfTowers;
     private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
 
 
@@ -78,6 +78,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         gameMap = new HardMap(mCanvas);
 
         mUserInterface = new UserInterface();
+
+        listOfTowers = new ArrayList<Tower>();
+
 
 
         // Initialize the drawing objects for the visuals of the game
@@ -196,15 +199,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This for loop utilizes polymorphism to print all)
-          /*  for(Tower t: listOfTowers) {
+            for(Tower t: listOfTowers) {
                 t.draw(mCanvas, mPaint);
             }
 
+            /*
             // TODO: Draw the enemies
             for(Enemy enemy: waveOfEnemies.get(currentWaveNumber)) {
                 enemy.draw(mCanvas, mPaint);
-            }
-            */
+            }*/
             // TODO: Draw the text for when the game is paused
 
 
@@ -248,6 +251,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 // if building tower and tapping in green area of map, tower is created
                 if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
                     // Build new tower
+                    listOfTowers.add(new MachineGunTower(new Point((int) x, (int) y)));
                     System.out.println("Tower built");
                     buildingMGTower = false;
                 }
