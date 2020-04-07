@@ -13,6 +13,7 @@ public class BasicAlien extends Enemy {
         this.hp = 100;
         this.speed = 5;
         this.alive = true;
+        changeHeading(0.0);
     }
 
     public void move() {

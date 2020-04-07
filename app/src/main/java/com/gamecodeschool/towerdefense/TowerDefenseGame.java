@@ -48,7 +48,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // List of GameObjects
     private int currentWaveNumber;
     private List<Tower> listOfTowers = new ArrayList<Tower>();
-    private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
+    private ArrayList<Enemy> currentWaveOfEnemies = new ArrayList<Enemy>();
 
 
 
@@ -59,22 +59,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         this.grid = new Grid(size);
 
-        //Deals with the pixels for our mobile application
-        // Work out how many pixels each block is
-        blockSize = size.x / NUM_BLOCKS_WIDE;
-        // How many blocks of the same size will fit into the height
-        mNumBlocksHigh = size.y / blockSize;
-
-        //Builds the UI according to size of screen...etc
-        //mUserInterface = new UserInterface(context, size);
-
-        //Builds the waveOfEnemiesList. Looks something like:
-        buildWaveOfEnemiesList();
 
         // TODO: Add Sound Strategy Later
 
         // TODO: Insert Game Objects Initialization Here
-        gameMap = new HardMap(mCanvas);
+        this.gameMap = new HardMap(mCanvas);
 
         mUserInterface = new UserInterface();
 
@@ -89,14 +78,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     Wave 1: Basic Alien, Basic Alien, Basic Alien, Basic Alien, Basic Alien
     Wave 2: Basic Alien, Basic Alien, Mid-Grade Alien, Basic Alien, Basic Alien
     etc. */
-    private void buildWaveOfEnemiesList() {
-        Point start = new Point(0, 0);
-        ArrayList<Enemy> waveOne = new ArrayList<Enemy>();
-        waveOne.add(new BasicAlien(start));
-        waveOne.add(new BasicAlien(start));
-        waveOne.add(new BasicAlien(start));
-
-        this.waveOfEnemies.add(waveOne);
+    private void getCurrentWaveOfEnemies() {
+        this.currentWaveOfEnemies = gameMap.getCurrentWaveOfEnemies(currentWaveNumber);
     }
 
     // Called to start a new game
@@ -120,6 +103,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (mPlaying) {
+            this.currentWaveOfEnemies = gameMap.getCurrentWaveOfEnemies(currentWaveNumber);
             if(!mPaused) {
                 // Update 10 times a second
                 if (updateRequired()) {
@@ -154,7 +138,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     public void update() {
 
         // TODO: Make all enemies move while towers attack
-        for(Enemy enemy: waveOfEnemies.get(currentWaveNumber)) {
+        for(Enemy enemy: currentWaveOfEnemies) {
             enemy.move();
         }
 
@@ -193,17 +177,17 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mUserInterface.draw(mCanvas, mPaint, lives, gold, mPlaying);
 
 
-
+            /*
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
-          /*  for(Tower t: listOfTowers) {
+            for(Tower t: listOfTowers) {
                 t.draw(mCanvas, mPaint);
-            }
-
+            */
+            int waveNumber = 1; // Will make this a variable later
             // TODO: Draw the enemies
-            for(Enemy enemy: waveOfEnemies.get(currentWaveNumber)) {
+            for(Enemy enemy: currentWaveOfEnemies) {
                 enemy.draw(mCanvas, mPaint);
             }
-            */
+
             // TODO: Draw the text for when the game is paused
 
 
