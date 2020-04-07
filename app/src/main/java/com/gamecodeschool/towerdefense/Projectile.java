@@ -27,8 +27,10 @@ class Projectile extends MoveableObject {
     @Override
     public void move() {
         // If enemy is in range, then attack them
-        super.move();
-        // Detect contact with enemy unit
+        double dx, dy;
+        dx = getLocation().x + (Math.cos(heading) * speed);
+        dy = getLocation().y + (Math.sin(heading) * speed);
+        setLocation(new Point((int) dx, (int) dy));        // Detect contact with enemy unit
         //range -= speed;
     }
 

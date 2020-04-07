@@ -58,16 +58,19 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         super(context);
         this.context = context;
         this.grid = new Grid(size);
+        mPaused = false;
 
         // TODO: Add Sound Strategy Later
 
         // TODO: Insert Game Objects Initialization Here
         gameMap = new HardMap(mCanvas);
-
         mUserInterface = new UserInterface();
 
         listOfTowers = new ArrayList<Tower>();
         listOfEnemies = new ArrayList<Enemy>();
+
+        //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
+        listOfEnemies.add(new BasicAlien(new Point(500,500)));
 
         // Initialize the drawing objects for the visuals of the game
         mSurfaceHolder = getHolder();
@@ -94,6 +97,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             if(!mPaused) {
                 // Update 10 times a second
                 if (updateRequired()) {
+                    System.out.println("Updating");
                     update();
                 }
             }
@@ -126,10 +130,10 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             enemy.move();
         }
 
-        for(Tower tower: listOfTowers) {
+       /* for(Tower tower: listOfTowers) {
             tower.attack(mCanvas, mPaint);
         }
-
+*/
         // TODO: If enemy reached the end of the static path, decrement userLives
 
         // TODO: If we ran out of Lives, then the user loses. End Game
@@ -168,6 +172,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 enemy.draw(mCanvas, mPaint);
             }
             // TODO: Draw the text for when the game is paused
+            if(!mPlaying) {
+                mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
+            }
 
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
@@ -180,21 +187,22 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         float y = motionEvent.getY();
 
         // Check if pause button was pressed
-        if ((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98)) && (y > (mCanvas.getHeight() * 0.86) && y < (mCanvas.getHeight() * 0.98))) {
+        if (playButtonPressed(x, y)) {
             if (!mStarted) {
                 newGame();
                 mPlaying = true;
             } else {
+                // if it's not paused, pause it, and set the pause var true
                 if (mPlaying) {
                     pause();
-                    mPlaying = false;
-                } else if (!mPlaying) {
+                    System.out.println("Game currently Paused");
+                } else {
                     resume();
-                    mPlaying = true;
+                    System.out.println("Game currently Playing");
                 }
             }
         // Check if Build tower button is pressed
-        } else if ((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98)) && (y > (mCanvas.getHeight() * 0.72) && y < (mCanvas.getHeight() * 0.84))) {
+        } else if (buildTowerButton(x, y)) {
             if (buildingMGTower) {
                 buildingMGTower = false;
                 System.out.println("Cancelled building tower");
@@ -216,6 +224,26 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
         }
         return true;
+    }
+
+    private boolean buildTowerButton(float x, float y) {
+        if((x > (mCanvas.getWidth() * 0.82)
+                && x < (mCanvas.getWidth() * 0.98))
+                && (y > (mCanvas.getHeight() * 0.72)
+                && y < (mCanvas.getHeight() * 0.84))) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean playButtonPressed(float x, float y) {
+        if ((x > (mCanvas.getWidth() * 0.82)
+                && x < (mCanvas.getWidth() * 0.98))
+                && (y > (mCanvas.getHeight() * 0.86)
+                && y < (mCanvas.getHeight() * 0.98))) {
+            return true;
+        }
+        return false;
     }
 
     // Stop the thread

@@ -7,7 +7,7 @@ import android.graphics.Point;
 abstract class MoveableObject extends GameObject {
 
     // Heading is a number between 0 and 359 to represent the heading in degrees
-    private double heading;
+    protected double heading;
     protected double speed;
 
     public MoveableObject(Point location) {
@@ -18,12 +18,7 @@ abstract class MoveableObject extends GameObject {
      * Moves the MoveableObject by updating the location using
      * the heading and speed to calculate the new point
      */
-    public void move() {
-        double dx, dy;
-        dx = getLocation().x + (Math.cos(heading) * speed);
-        dy = getLocation().y + (Math.sin(heading) * speed);
-        setLocation(new Point((int) dx, (int) dy));
-    }
+    abstract void move();
 
     void draw(Canvas canvas, Paint paint) {
         canvas.drawBitmap(mBitmap, location.x * mSize, location.y * mSize, paint);

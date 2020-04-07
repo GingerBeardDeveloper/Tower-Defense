@@ -25,6 +25,15 @@ abstract class Enemy extends MoveableObject {
         }
     }
 
+    @Override
+    public void move() {
+        double dx, dy;
+        dx = getLocation().x + (Math.cos(heading) * speed);
+        dy = getLocation().y + (Math.sin(heading) * speed);
+        setLocation(new Point((int) dx, (int) dy));
+    }
+
+
     /**
      *
      * @param healthRestored determined by either the enemy or area of effect from healer class

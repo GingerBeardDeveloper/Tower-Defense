@@ -7,7 +7,7 @@ import android.graphics.Point;
 
 abstract class GameObject {
 
-    protected android.graphics.Point location = new Point();
+    protected android.graphics.Point location;
     protected int mSize;
     protected Bitmap mBitmap;
 

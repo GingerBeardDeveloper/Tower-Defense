@@ -14,6 +14,7 @@ public class BasicAlien extends Enemy {
         this.hp = 100;
         this.speed = 20;
         this.alive = true;
+        this.heading = 0.0;
     }
 
     public void move() {
@@ -22,7 +23,6 @@ public class BasicAlien extends Enemy {
 
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
-        // mCanvas.drawBitmap(mBitmap, location.x * mSize, location.y * mSize, mPaint);
         mPaint.setColor(Color.RED);
         mCanvas.drawRect(location.x - 20, location.y - 20, location.x + 20, location.y + 20, mPaint);
     }
