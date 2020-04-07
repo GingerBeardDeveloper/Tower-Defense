@@ -33,6 +33,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private final int NUM_BLOCKS_WIDE = 40;
 
     // Objects for drawing
+    private Grid grid;
     private Canvas mCanvas;
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
@@ -54,6 +55,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     public TowerDefenseGame(Context context, Point size) {
         super(context);
         this.context = context;
+
+        this.grid = new Grid(size);
 
         //Deals with the pixels for our mobile application
         // Work out how many pixels each block is
@@ -173,11 +176,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
 
-            // TODO: Draw the Path
-            //Path path = new Path(context, mCanvas, mPaint);
-            //path.drawPath();
-            gameMap.draw(mCanvas);
+            // TODO: Draw the Grid
+            grid.draw(mCanvas, mPaint);
 
+            // TODO: Draw the Path
+            gameMap.draw(mCanvas);
 
             // TODO: Make the background space-themed
             // Fill the screen with a color
