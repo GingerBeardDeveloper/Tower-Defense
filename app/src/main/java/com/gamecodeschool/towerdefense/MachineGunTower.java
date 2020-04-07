@@ -5,7 +5,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import java.util.ArrayList;
+
 public class MachineGunTower extends Tower {
+
+    ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
     public MachineGunTower(Point location) {
         super(location);
@@ -22,7 +26,16 @@ public class MachineGunTower extends Tower {
     }
 
     // Send a new projectile in the air
-    void attack() {
+    void attack(Canvas mCanvas, Paint mPaint) {
+      /*  Projectile projectile = new Projectile(this.location, this.damage,this.range, this.speed, 5);
+        projectiles.add(projectile);
 
+        if(!projectiles.isEmpty()) {
+            for(Projectile p: projectiles) {
+                p.move();
+                p.draw(mCanvas, mPaint);
+            }
+        }
+        */
     }
 }
