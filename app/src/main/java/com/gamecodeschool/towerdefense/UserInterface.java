@@ -11,7 +11,6 @@ import android.graphics.RectF;
 // It will allow the user to place towers, pause, and resume the game
 public class UserInterface {
 
-    int lives, gold;
     int height, width;
 
     public UserInterface() {
@@ -24,7 +23,9 @@ public class UserInterface {
         width = mCanvas.getWidth();
         // Draw rectangle on right 20% of screen for UI
         mCanvas.drawRect(width, height, (float) (width * 0.8), 0, mPaint);
-        mCanvas.drawText("Lives: 5" , 20, 120, mPaint);
-        mCanvas.drawText("Gold: 500 pieces", 20, 300, mPaint);
+        mPaint.setTextSize(40);
+        mPaint.setColor(Color.BLACK);
+        mCanvas.drawText("Lives: 5" , (float) (width * 0.82), (float) (height * 0.05), mPaint);
+        mCanvas.drawText("Gold: 500 pieces", (float) (width * 0.82), (float) (height * 0.15), mPaint);
     }
 }
