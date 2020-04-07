@@ -24,6 +24,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private long mNextFrameTime;
 
     private int lives, gold;
+    private Map gameMap;
 
     // Attributes for pixels of the game
     Context context;
@@ -69,6 +70,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         // TODO: Add Sound Strategy Later
 
         // TODO: Insert Game Objects Initialization Here
+        gameMap = new HardMap(mCanvas);
 
         mUserInterface = new UserInterface();
 
@@ -172,8 +174,10 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // TODO: Draw the Path
-            Path path = new Path(context, mCanvas, mPaint);
-            path.drawPath();
+            //Path path = new Path(context, mCanvas, mPaint);
+            //path.drawPath();
+            gameMap.draw(mCanvas);
+
 
             // TODO: Make the background space-themed
             // Fill the screen with a color
