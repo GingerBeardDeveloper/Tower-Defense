@@ -44,6 +44,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private boolean mStarted;
     private boolean mPlaying;
     private boolean mPaused;
+    private boolean buildingMGTower;
 
     // List of GameObjects
     private int currentWaveNumber;
@@ -194,7 +195,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
 
 
-            // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
+            // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This for loop utilizes polymorphism to print all)
           /*  for(Tower t: listOfTowers) {
                 t.draw(mCanvas, mPaint);
             }
@@ -226,14 +227,32 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 if (mPlaying) {
                     pause();
                     mPlaying = false;
-                }else if (!mPlaying) {
+                } else if (!mPlaying) {
                     resume();
                     mPlaying = true;
                 }
             }
+        // Check if Build tower button is pressed
+        } else if ((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98)) && (y > (mCanvas.getHeight() * 0.72) && y < (mCanvas.getHeight() * 0.84))) {
+            if (buildingMGTower) {
+                buildingMGTower = false;
+                System.out.println("Cancelled building tower");
+            } else {
+                buildingMGTower = true;
+                System.out.println("Building tower");
+            }
         }
 
-
+        if (buildingMGTower) {
+            if (x < mCanvas.getWidth() * 0.82) {
+                // if building tower and tapping in green area of map, tower is created
+                if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
+                    // Build new tower
+                    System.out.println("Tower built");
+                    buildingMGTower = false;
+                }
+            }
+        }
 
         return true;
     }
