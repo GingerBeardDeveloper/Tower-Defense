@@ -22,10 +22,9 @@ public class HardMap extends Map {
         pathPaint = new Paint();
         pathPaint.setColor(Color.GRAY);
         alienWaves = new ArrayList<Wave>();
-        setupWaves(1);
-        startOfPath = new Point(0, (int)(mCanvas.getHeight() * 0.5));
-        endOfPath = new Point((int)(mCanvas.getWidth() * 0.8), (int)(mCanvas.getHeight() * 0.5));
-        spaceEnemiesApart();
+      //  setupWaves(1);
+        //startOfPath = new Point(0, (int)(mCanvas.getHeight() * 0.5));
+        //endOfPath = new Point((int)(mCanvas.getWidth() * 0.8), (int)(mCanvas.getHeight() * 0.5));
     }
 
     public void draw(Canvas mCanvas) {
@@ -38,6 +37,13 @@ public class HardMap extends Map {
         return listOfEnemies.get(waveNumber);
     }
 
+    public void setStartOfPath(Canvas mCanvas) {
+        this.startOfPath = new Point(0, (int)(mCanvas.getHeight() * 0.5));
+    }
+
+    public void setEndOfPath(Canvas mCanvas) {
+        this.endOfPath = endOfPath = new Point((int)(mCanvas.getWidth() * 0.8), (int)(mCanvas.getHeight() * 0.5));
+    }
     // creates a predefined list of waves of aliens
     private void setupWaves(int numWaves) {
         for (int i = 0; i < numWaves; i++) {

@@ -110,7 +110,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (mPlaying) {
-            this.currentWaveOfEnemies = gameMap.getCurrentWaveOfEnemies(currentWaveNumber);
+           // this.currentWaveOfEnemies = gameMap.getCurrentWaveOfEnemies(currentWaveNumber);
             if(!mPaused) {
                 // Update 10 times a second
                 if (updateRequired()) {
@@ -144,11 +144,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
 
-        // TODO: Make all enemies move while towers attack
+       /* // TODO: Make all enemies move while towers attack
         for(Enemy enemy: currentWaveOfEnemies) {
             enemy.move();
         }
-
+*/
         for(Tower tower: listOfTowers) {
             tower.attack();
         }
