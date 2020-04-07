@@ -13,14 +13,14 @@ public class HardMap extends Map {
     Paint pathPaint;
 
     public HardMap(Canvas mCanvas) {
-        //start = new Point(mCanvas.getWidth(), mCanvas.getHeight() / 2);
-        //end = new Point((int) (mCanvas.getWidth() * 0.2),mCanvas.getHeight() / 2);
         pathPaint = new Paint();
         pathPaint.setColor(Color.GRAY);
         alienWaves = new ArrayList<Wave>();
     }
 
     public void draw(Canvas mCanvas) {
+        start = new Point(mCanvas.getWidth(), mCanvas.getHeight() / 2);
+        end = new Point((int) (mCanvas.getWidth() * 0.2),mCanvas.getHeight() / 2);
         mCanvas.drawRect(0, (float) (mCanvas.getHeight() / 2 + 40), (float) (mCanvas.getWidth() * 0.8), (float) (mCanvas.getHeight() / 2 - 40), pathPaint);
     }
 
