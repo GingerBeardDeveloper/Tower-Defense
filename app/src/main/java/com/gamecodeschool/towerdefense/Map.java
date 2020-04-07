@@ -9,8 +9,6 @@ abstract class Map {
 
     ArrayList<Point> path;
     Point start, end;
-
-
-
+    int heading;
 
 }
