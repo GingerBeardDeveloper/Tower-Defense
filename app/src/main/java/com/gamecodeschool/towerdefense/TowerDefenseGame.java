@@ -187,7 +187,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // TODO: Draw the number of Lives left, the score
-            mUserInterface.draw(mCanvas, mPaint, lives, gold);
+            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPlaying);
 
             // TODO: Draw the User Interface Bar
 
