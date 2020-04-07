@@ -40,6 +40,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
     // Attributes to deal with start/pause/UI
     private UserInterface mUserInterface;
+    private boolean mStarted;
     private boolean mPlaying;
     private boolean mPaused;
 
@@ -97,6 +98,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
     // Called to start a new game
     public void newGame() {
+        mStarted = true;
         // TODO: Reset the number of lives that the user has
         lives = 10;
 
@@ -114,16 +116,13 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Handles the game loop
     @Override
     public void run() {
-        /*while (mPlaying) {
+        while (mPlaying) {
             if(!mPaused) {
                 // Update 10 times a second
                 if (updateRequired()) {
                     update();
                 }
             }
-            draw();
-        }*/
-        while (mPlaying) {
             draw();
         }
     }
@@ -164,6 +163,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
 
         // TODO: If we ran out of Lives, then the user loses. End Game
+        mStarted = false;
 
     }
 
@@ -186,10 +186,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(120);
 
-            // TODO: Draw the number of Lives left, the score
+            // Draw the UI with number of Lives left, pause button
             mUserInterface.draw(mCanvas, mPaint, lives, gold, mPlaying);
 
-            // TODO: Draw the User Interface Bar
 
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This forloop utilizes polymorphism to print all)
@@ -210,12 +209,31 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         }
     }
 
-   /* @Override
+    @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        float x = motionEvent.getX();
+        float y = motionEvent.getY();
+
+        // Check if pause button was pressed
+        if ((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98)) && (y > (mCanvas.getHeight() * 0.86) && y < (mCanvas.getHeight() * 0.98))) {
+            if (!mStarted) {
+                newGame();
+                mPlaying = true;
+            } else {
+                if (mPlaying) {
+                    pause();
+                    mPlaying = false;
+                }else if (!mPlaying) {
+                    resume();
+                    mPlaying = true;
+                }
+            }
+        }
+
+
 
         return true;
     }
-    */
 
     // Stop the thread
     public void pause() {

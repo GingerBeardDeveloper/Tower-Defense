@@ -18,7 +18,7 @@ public class UserInterface {
     }
 
     public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean paused) {
-        // TODO: create ui box on right side of screen
+
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
 
