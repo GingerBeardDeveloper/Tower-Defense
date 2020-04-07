@@ -1,6 +1,7 @@
 package com.gamecodeschool.towerdefense;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
@@ -16,19 +17,12 @@ public class MachineGunTower extends Tower {
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
         // mCanvas.drawBitmap(mBitmap, location.x * mSize, location.y * mSize, mPaint);
-        mCanvas.drawRect(location.x - 20, location.y - 20, location.x + 20, location.y + 20, mPaint);
+        mPaint.setColor(Color.CYAN);
+        mCanvas.drawRect(location.x - 40, location.y - 40, location.x + 40, location.y + 40, mPaint);
     }
 
     // Send a new projectile in the air
     void attack() {
-        Projectile projectile = new Projectile(location, damage, range, speed);
-        this.listOfProjectiles.add(projectile);
-        updateProjectile();
-    }
 
-    private void updateProjectile() {
-        for(Projectile projectile: listOfProjectiles) {
-            projectile.move();
-        }
     }
 }

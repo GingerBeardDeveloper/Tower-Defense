@@ -32,15 +32,22 @@ public class UserInterface {
         mCanvas.drawText("Gold: " + gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
 
 
+        // Build basic tower
+        mPaint.setColor(Color.DKGRAY);
+        mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.72), (float) (width * 0.98), (float) (height * 0.84), mPaint);
+        mPaint.setColor(Color.WHITE);
+        mPaint.setTextSize(50);
+        mCanvas.drawText("MG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.80), mPaint);
+
         // Play/Pause Button
         mPaint.setColor(Color.DKGRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.86), (float) (width * 0.98), (float) (height * 0.98), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(100);
         if (paused) {
-            mCanvas.drawText("Play",(float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
+            mCanvas.drawText("Play", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
         } else {
-            mCanvas.drawText("Pause",(float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
+            mCanvas.drawText("Pause", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
         }
     }
 }
