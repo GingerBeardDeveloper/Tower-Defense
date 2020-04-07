@@ -23,6 +23,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private Thread mThread = null;
     private long mNextFrameTime;
 
+    private int lives, gold;
+
     // Attributes for pixels of the game
     Context context;
     int blockSize;
@@ -94,10 +96,13 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Called to start a new game
     public void newGame() {
         // TODO: Reset the number of lives that the user has
+        lives = 10;
 
         // TODO: Set the user off with a specific amount of gold
+        gold = 500;
 
         // TODO: Reset the whole canvas
+
 
         // Forces an update to be triggered
         mNextFrameTime = System.currentTimeMillis();
@@ -178,7 +183,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // TODO: Draw the number of Lives left, the score
-            mUserInterface.draw(mCanvas, mPaint);
+            mUserInterface.draw(mCanvas, mPaint, lives, gold);
 
             // TODO: Draw the User Interface Bar
 

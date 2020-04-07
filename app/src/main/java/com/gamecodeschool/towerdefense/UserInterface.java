@@ -17,7 +17,7 @@ public class UserInterface {
 
     }
 
-    public void draw(Canvas mCanvas, Paint mPaint) {
+    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold) {
         // TODO: create ui box on right side of screen
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
@@ -25,7 +25,7 @@ public class UserInterface {
         mCanvas.drawRect(width, height, (float) (width * 0.8), 0, mPaint);
         mPaint.setTextSize(40);
         mPaint.setColor(Color.BLACK);
-        mCanvas.drawText("Lives: 5" , (float) (width * 0.82), (float) (height * 0.05), mPaint);
-        mCanvas.drawText("Gold: 500 pieces", (float) (width * 0.82), (float) (height * 0.15), mPaint);
+        mCanvas.drawText("Lives: " + lives, (float) (width * 0.82), (float) (height * 0.05), mPaint);
+        mCanvas.drawText("Gold: " + gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
     }
 }
