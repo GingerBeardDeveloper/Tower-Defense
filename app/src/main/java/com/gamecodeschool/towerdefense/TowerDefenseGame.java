@@ -58,19 +58,25 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         super(context);
         this.context = context;
         this.grid = new Grid(size);
-        mPaused = false;
+        mPaused = true; //game initially paused
+        mStarted = false;
 
         // TODO: Add Sound Strategy Later
 
         // TODO: Insert Game Objects Initialization Here
         gameMap = new HardMap(mCanvas);
-        mUserInterface = new UserInterface();
+        lives = 10;
+        gold = 500;
+        mUserInterface = new UserInterface(lives, gold, mPaused);
 
         listOfTowers = new ArrayList<Tower>();
         listOfEnemies = new ArrayList<Enemy>();
 
         //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
-        listOfEnemies.add(new BasicAlien(new Point(500,500)));
+        Point startPosition = new Point(0, (int)(size.y * 0.5));
+        listOfEnemies.add(new BasicAlien(startPosition));
+        listOfEnemies.add(new BasicAlien(startPosition));
+
 
         // Initialize the drawing objects for the visuals of the game
         mSurfaceHolder = getHolder();
@@ -117,6 +123,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             // Setup when the next update will be triggered
             mNextFrameTime = System.currentTimeMillis()
                              + MILLIS_PER_SECOND / TARGET_FPS;
+
             return true;
         }
         return false;
@@ -160,7 +167,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPlaying);
+            mUserInterface.draw(mCanvas, mPaint);
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This for loop utilizes polymorphism to print all)
             for(Tower t: listOfTowers) {
@@ -191,18 +198,22 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             if (!mStarted) {
                 newGame();
                 mPlaying = true;
-            } else {
+            }
+            else {
                 // if it's not paused, pause it, and set the pause var true
-                if (mPlaying) {
+                if (!mPaused) {
                     pause();
+                    mPaused = true;
                     System.out.println("Game currently Paused");
                 } else {
                     resume();
+                    mPaused = false;
                     System.out.println("Game currently Playing");
                 }
             }
         // Check if Build tower button is pressed
-        } else if (buildTowerButton(x, y)) {
+        }
+        else if (buildTowerButton(x, y)) {
             if (buildingMGTower) {
                 buildingMGTower = false;
                 System.out.println("Cancelled building tower");

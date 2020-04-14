@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MachineGunTower extends Tower {
 
-    ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    ArrayList<MachineGunBullets> bullets = new ArrayList<MachineGunBullets>();
 
     public MachineGunTower(Point location) {
         super(location);
@@ -25,17 +25,19 @@ public class MachineGunTower extends Tower {
         mCanvas.drawRect(location.x - 40, location.y - 40, location.x + 40, location.y + 40, mPaint);
     }
 
+
+    public void spawnBullet() {
+        this.bullets.add(new MachineGunBullets(location, damage, range, speed));
+    }
+
     // Send a new projectile in the air
     void attack(Canvas mCanvas, Paint mPaint) {
-      /*  Projectile projectile = new Projectile(this.location, this.damage,this.range, this.speed, 5);
-        projectiles.add(projectile);
-
-        if(!projectiles.isEmpty()) {
-            for(Projectile p: projectiles) {
+        if(!bullets.isEmpty()) {
+            for(Projectile p: bullets) {
                 p.move();
                 p.draw(mCanvas, mPaint);
             }
         }
-        */
+
     }
 }

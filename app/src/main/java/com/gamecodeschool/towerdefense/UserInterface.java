@@ -12,13 +12,16 @@ import android.graphics.RectF;
 public class UserInterface {
 
     int height, width;
+    private int numLives, gold;
+    private boolean paused;
 
-    public UserInterface() {
-
+    public UserInterface(int lives, int gold, boolean paused) {
+        this.numLives = lives;
+        this.gold = gold;
+        this.paused = paused;
     }
 
-    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean paused) {
-
+    public void draw(Canvas mCanvas, Paint mPaint) {
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
 
@@ -26,20 +29,23 @@ public class UserInterface {
         mCanvas.drawRect(width, height, (float) (width * 0.8), 0, mPaint);
         mPaint.setTextSize(40);
         mPaint.setColor(Color.BLACK);
-
-        // List Lives remaining and Gold accumulated
-        mCanvas.drawText("Lives: " + lives, (float) (width * 0.82), (float) (height * 0.05), mPaint);
-        mCanvas.drawText("Gold: " + gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
-
+        drawLivesAndGold(mCanvas, mPaint);
+        drawPauseButton(mCanvas, mPaint);
 
         // Build basic tower
+        drawTowerBuilder(mCanvas, mPaint);
+    }
+
+    public void drawTowerBuilder(Canvas mCanvas, Paint mPaint) {
         mPaint.setColor(Color.DKGRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.72), (float) (width * 0.98), (float) (height * 0.84), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(50);
         mCanvas.drawText("MG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.80), mPaint);
+    }
 
-        // Play/Pause Button
+    // Deals with the pause button and the toggle feature
+    public void drawPauseButton(Canvas mCanvas, Paint mPaint) {
         mPaint.setColor(Color.DKGRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.86), (float) (width * 0.98), (float) (height * 0.98), mPaint);
         mPaint.setColor(Color.WHITE);
@@ -49,5 +55,18 @@ public class UserInterface {
         } else {
             mCanvas.drawText("Pause", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
         }
+    }
+
+    public void drawLivesAndGold(Canvas mCanvas, Paint mPaint) {
+        mCanvas.drawText("Lives: " + this.numLives, (float) (width * 0.82), (float) (height * 0.05), mPaint);
+        mCanvas.drawText("Gold: " + this.gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
+    }
+
+    public void togglePauseButton() {
+        this.paused = !this.paused;
+    }
+
+    public void decrementLives() {
+        this.numLives--;
     }
 }

@@ -21,6 +21,10 @@ public class BasicAlien extends Enemy {
         super.move();
     }
 
+    public void setStartPosition(Point startPosition) {
+        setLocation(startPosition);
+    }
+
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
         mPaint.setColor(Color.RED);
