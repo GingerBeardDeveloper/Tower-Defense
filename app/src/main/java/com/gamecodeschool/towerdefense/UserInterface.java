@@ -21,15 +21,16 @@ public class UserInterface {
         this.paused = paused;
     }
 
-    public void draw(Canvas mCanvas, Paint mPaint) {
+    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold) {
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
 
         // Draw rectangle on right 20% of screen for UI
+        mPaint.setColor(Color.WHITE);
         mCanvas.drawRect(width, height, (float) (width * 0.8), 0, mPaint);
         mPaint.setTextSize(40);
         mPaint.setColor(Color.BLACK);
-        drawLivesAndGold(mCanvas, mPaint);
+        drawLivesAndGold(mCanvas, mPaint, lives, gold);
         drawPauseButton(mCanvas, mPaint);
 
         // Build basic tower
@@ -57,9 +58,9 @@ public class UserInterface {
         }
     }
 
-    public void drawLivesAndGold(Canvas mCanvas, Paint mPaint) {
-        mCanvas.drawText("Lives: " + this.numLives, (float) (width * 0.82), (float) (height * 0.05), mPaint);
-        mCanvas.drawText("Gold: " + this.gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
+    public void drawLivesAndGold(Canvas mCanvas, Paint mPaint, int lives, int gold) {
+        mCanvas.drawText("Lives: " + lives, (float) (width * 0.82), (float) (height * 0.05), mPaint);
+        mCanvas.drawText("Gold: " + gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
     }
 
     public void togglePauseButton() {

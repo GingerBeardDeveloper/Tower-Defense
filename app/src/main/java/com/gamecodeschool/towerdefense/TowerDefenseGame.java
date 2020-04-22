@@ -51,6 +51,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private List<Tower> listOfTowers;
     //private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
     private ArrayList<Enemy> listOfEnemies;
+    private ArrayList<Bullet> listOfBullets;
 
 
 
@@ -71,10 +72,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         listOfTowers = new ArrayList<Tower>();
         listOfEnemies = new ArrayList<Enemy>();
+        listOfBullets = new ArrayList<Bullet>();
 
         //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
         Point startPosition = new Point(0, (int)(size.y * 0.5));
-        listOfEnemies.add(new BasicAlien(startPosition));
+        listOfEnemies.clear();
         listOfEnemies.add(new BasicAlien(startPosition));
 
 
@@ -103,7 +105,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             if(!mPaused) {
                 // Update 10 times a second
                 if (updateRequired()) {
-                    System.out.println("Updating");
+                    //System.out.println("Updating");
                     update();
                 }
             }
@@ -141,7 +143,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             tower.attack(mCanvas, mPaint);
         }
 */
+
         // TODO: If enemy reached the end of the static path, decrement userLives
+        for (int i = 0; i < listOfEnemies.size(); i++) {
+            // System.out.println("Enemy "+ i + ": " + listOfEnemies.get(i).getLocation().x + " Width: " + mCanvas.getWidth());
+            if (listOfEnemies.get(i).getLocation().x > 1440) {
+                listOfEnemies.remove(i);
+                lives--;
+            }
+        }
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         //mStarted = false;
@@ -166,9 +176,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(120);
 
-            // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint);
-
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This for loop utilizes polymorphism to print all)
             for(Tower t: listOfTowers) {
                 t.draw(mCanvas, mPaint);
@@ -178,6 +185,10 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             for(Enemy enemy: listOfEnemies) {
                 enemy.draw(mCanvas, mPaint);
             }
+
+            // Draw the UI with number of Lives left, pause button
+            mUserInterface.draw(mCanvas, mPaint, lives, gold);
+
             // TODO: Draw the text for when the game is paused
             if(!mPlaying) {
                 mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
