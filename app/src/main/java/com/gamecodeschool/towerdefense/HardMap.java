@@ -16,6 +16,7 @@ public class HardMap extends Map {
         pathPaint = new Paint();
         pathPaint.setColor(Color.GRAY);
         alienWaves = new ArrayList<Wave>();
+        setupWaves();
     }
 
     public void draw(Canvas mCanvas) {
@@ -25,9 +26,7 @@ public class HardMap extends Map {
     }
 
     // creates a predefined list of waves of aliens
-    private void setupWaves(int numWaves) {
-        for (int i = 0; i < numWaves; i++) {
-            alienWaves.add(new Wave(5, 2));
-        }
+    private void setupWaves() {
+        alienWaves.add(new Wave(5, 2));
     }
 }

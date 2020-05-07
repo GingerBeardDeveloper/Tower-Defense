@@ -12,7 +12,7 @@ public class BasicAlien extends Enemy {
     public BasicAlien(Point location) {
         super(location);
         this.hp = 100;
-        this.speed = 20;
+        this.speed = 50;
         this.alive = true;
         this.heading = 0.0;
     }
