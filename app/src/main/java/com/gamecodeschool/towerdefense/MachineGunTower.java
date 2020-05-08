@@ -4,12 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.content.Context;
 
 import java.util.ArrayList;
 
 public class MachineGunTower extends Tower {
 
     ArrayList<MachineGunBullets> bullets = new ArrayList<MachineGunBullets>();
+    Context context;
 
     public MachineGunTower(Point location) {
         super(location);
@@ -26,18 +28,8 @@ public class MachineGunTower extends Tower {
     }
 
 
-    public void spawnBullet() {
-        this.bullets.add(new MachineGunBullets(location, damage, range, speed));
+    public void spawnBullet(ArrayList<Projectile> listOfBullets) {
+       listOfBullets.add(new MachineGunBullets(location, damage, range, speed));
     }
 
-    // Send a new projectile in the air
-    void attack(Canvas mCanvas, Paint mPaint) {
-        if(!bullets.isEmpty()) {
-            for(Projectile p: bullets) {
-                p.move();
-                p.draw(mCanvas, mPaint);
-            }
-        }
-
-    }
 }

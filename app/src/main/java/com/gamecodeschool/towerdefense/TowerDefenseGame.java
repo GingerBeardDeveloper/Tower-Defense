@@ -1,6 +1,7 @@
 package com.gamecodeschool.towerdefense;
 
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import android.content.Context;
@@ -16,16 +17,18 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.util.Log.e;
+
 
 class TowerDefenseGame extends SurfaceView implements Runnable {
 
     // Objects for the game loop/thread
-    private Thread mThread = null;
+    private Thread mThread = new Thread();
     private long mNextFrameTime;
 
     private int lives, gold;
     private Map gameMap;
-
+    private int counter;
     // Attributes for pixels of the game
     Context context;
     int blockSize;
@@ -51,7 +54,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private List<Tower> listOfTowers;
     //private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
     private ArrayList<Enemy> listOfEnemies;
-    private ArrayList<Bullet> listOfBullets;
+    private ArrayList<Projectile> listOfBullets;
 
 
 
@@ -72,12 +75,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         listOfTowers = new ArrayList<Tower>();
         listOfEnemies = new ArrayList<Enemy>();
-        listOfBullets = new ArrayList<Bullet>();
+        listOfBullets = new ArrayList<Projectile>();
 
         //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
         Point startPosition = new Point(0, (int)(size.y * 0.5));
         listOfEnemies.clear();
-        listOfEnemies.add(new BasicAlien(startPosition));
+        listOfEnemies.add(new BasicAlien(startPosition, context));
 
 
         // Initialize the drawing objects for the visuals of the game
@@ -134,24 +137,21 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Purpose of this method is to move all of the movable objects in the game
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
+        counter++;
         // TODO: Make all enemies move while towers attack
         for(Enemy enemy: listOfEnemies) {
             enemy.move();
-        }
-
-       /* for(Tower tower: listOfTowers) {
-            tower.attack(mCanvas, mPaint);
-        }
-*/
-
-        // TODO: If enemy reached the end of the static path, decrement userLives
-        for (int i = 0; i < listOfEnemies.size(); i++) {
-            // System.out.println("Enemy "+ i + ": " + listOfEnemies.get(i).getLocation().x + " Width: " + mCanvas.getWidth());
-            if (listOfEnemies.get(i).getLocation().x > 1440) {
-                listOfEnemies.remove(i);
+            // After they move, if they reached end of path, decrement lives
+            if (enemy.getLocation().x > 1440) {
+                listOfEnemies.remove(enemy);
                 lives--;
             }
         }
+
+        for(Tower tower: listOfTowers) {
+            tower.spawnBullet(listOfBullets);
+        }
+
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         //mStarted = false;
@@ -164,7 +164,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // TODO: Draw the Grid
-            grid.draw(mCanvas, mPaint);
+            //grid.draw(mCanvas, mPaint);
 
             // TODO: Draw the Path
             gameMap.draw(mCanvas);
@@ -190,10 +190,10 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mUserInterface.draw(mCanvas, mPaint, lives, gold);
 
             // TODO: Draw the text for when the game is paused
-            if(!mPlaying) {
+          /*  if(!mPlaying) {
                 mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
             }
-
+        */
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
@@ -214,10 +214,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 // if it's not paused, pause it, and set the pause var true
                 if (!mPaused) {
                     pause();
-                    mPaused = true;
+                    mPaused = !mPaused;
                     System.out.println("Game currently Paused");
                 } else {
                     resume();
+                    mNextFrameTime = System.currentTimeMillis();
                     mPaused = false;
                     System.out.println("Game currently Playing");
                 }
@@ -274,7 +275,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         try {
             mThread.join();
         } catch (InterruptedException e) {
-            // Error
+            Log.e("Error:", "joining thread");
         }
     }
 
