@@ -22,5 +22,5 @@ abstract class Tower extends GameObject {
     // Inherits draw function
     abstract void draw(Canvas canvas, Paint paint);
 
-    abstract Projectile shoot();
+    abstract Bullet shoot(double heading);
 }

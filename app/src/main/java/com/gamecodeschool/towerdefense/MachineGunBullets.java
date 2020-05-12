@@ -3,26 +3,21 @@ package com.gamecodeschool.towerdefense;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 
-public class MachineGunBullets extends Projectile {
+public class MachineGunBullets extends Bullet {
 
-    private RectF mRect;
-
-    public MachineGunBullets(Point location, double damage, double speed) {
+    public MachineGunBullets(Point location, double heading, double damage, double speed) {
         super(location, damage, speed);
-        mRect = new RectF(location.x, location.y, location.x+10, location.y+10);
+        this.heading = heading;
     }
 
-    public RectF getRect() { return mRect; }
-
     void draw(Canvas mCanvas, Paint mPaint) {
-        //mPaint.setColor(Color.RED);
-        mRect = new RectF(location.x - 20, location.y-10, location.x + 10, location.y);
-        //mCanvas.drawRect(mRect, mPaint);
-        mCanvas.drawBitmap(this.mBitmap, this.mRect.left, this.mRect.top, mPaint);
+        mPaint.setColor(Color.RED);
+        mCanvas.drawCircle(location.x, location.y, 5, mPaint);
     }
 
 }

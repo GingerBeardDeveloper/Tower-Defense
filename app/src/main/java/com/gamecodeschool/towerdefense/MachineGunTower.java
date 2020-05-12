@@ -9,13 +9,11 @@ import java.util.ArrayList;
 
 public class MachineGunTower extends Tower {
 
-    ArrayList<MGBullets> bullets = new ArrayList<MGBullets>();
-
     public MachineGunTower(Point location) {
         super(location);
         this.damage = 50;
         this.range = 20;
-        this.speed = 20;
+        this.speed = 30;
     }
 
     @Override
@@ -26,8 +24,9 @@ public class MachineGunTower extends Tower {
     }
 
     // Send a new projectile in the air
-    public MGBullets shoot() {
-        return new MGBullets(location, damage, speed);
+    public MachineGunBullets shoot(double heading) {
+        System.out.println("Shoot");
+        return new MachineGunBullets(location, heading, damage, speed);
     }
 
 }

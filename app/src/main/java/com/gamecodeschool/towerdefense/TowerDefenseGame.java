@@ -147,14 +147,16 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
         }
 
-       /* for(Tower tower: gameWorld.towerArrayList) {
-            tower.attack(mCanvas, mPaint);
+        // Check if there are enemies on the screen and shoot if they exist
+        shootTowers();
+
+        // Move bullets
+        for(Bullet bullet: gameWorld.bulletArrayList) {
+            bullet.move();
         }
-*/
 
         // TODO: If enemy reached the end of the static path, decrement userLives
         for (int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
-            // System.out.println("Enemy "+ i + ": " + gameWorld.enemyArrayList.get(i).getLocation().x + " Width: " + mCanvas.getWidth());
             if (gameWorld.enemyArrayList.get(i).getLocation().x > 1440) {
                 gameWorld.enemyArrayList.remove(i);
                 lives--;
@@ -186,12 +188,17 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(120);
 
-            // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This for loop utilizes polymorphism to print all)
+            // Draw every tower.
             for(Tower t: gameWorld.towerArrayList) {
                 t.draw(mCanvas, mPaint);
             }
 
-            // TODO: Draw the enemies
+            // Draw the bullets
+            for(Bullet bullet: gameWorld.bulletArrayList) {
+                bullet.draw(mCanvas, mPaint);
+            }
+
+            // Draw the enemies
             for(Enemy enemy: gameWorld.enemyArrayList) {
                 enemy.draw(mCanvas, mPaint);
             }
@@ -303,5 +310,25 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         mPlaying = true;
         mThread = new Thread(this);
         mThread.start();
+    }
+
+    private void shootTowers() {
+        if (!gameWorld.enemyArrayList.isEmpty()) {
+            Point enemyLocation = gameWorld.enemyArrayList.get(0).getLocation();
+            for (Tower tower: gameWorld.towerArrayList) {
+                double heading = Math.toDegrees(Math.atan((float) (enemyLocation.y - tower.location.y) / (enemyLocation.x - tower.location.x)));
+                gameWorld.bulletArrayList.add(tower.shoot(heading));
+            }
+        }
+    }
+
+    private void cleanupBullets() {
+        for (Bullet bullet : gameWorld.bulletArrayList) {
+            if (bullet.location.x < 0 || bullet.location.x > 1440) {
+                gameWorld.bulletArrayList.remove(bullet);
+            } else if (bullet.location.y < 0 || bullet.location.y > 1000) {
+                gameWorld.bulletArrayList.remove(bullet);
+            }
+        }
     }
 }

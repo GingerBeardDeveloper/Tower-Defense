@@ -27,10 +27,8 @@ class Projectile extends MoveableObject {
     @Override
     public void move() {
         double dx, dy;
-        dx = getLocation().x + (Math.cos(heading) * speed);
-        dy = getLocation().y + (Math.sin(heading) * speed);
+        dx = getLocation().x + (Math.cos(Math.toRadians(heading)) * speed);
+        dy = getLocation().y + (Math.sin(Math.toRadians(heading)) * speed);
         setLocation(new Point((int) dx, (int) dy));
     }
-
-    public RectF getRect() { return this.rect; }
 }
