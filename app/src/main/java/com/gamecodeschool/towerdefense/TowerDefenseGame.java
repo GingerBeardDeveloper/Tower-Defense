@@ -49,10 +49,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // List of GameObjects
     private GameWorld gameWorld;
     private int currentWaveNumber;
-    private List<Tower> listOfTowers;
-    //private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
-    private ArrayList<Enemy> listOfEnemies;
-    private ArrayList<Bullet> listOfBullets;
 
 
 
@@ -73,14 +69,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         // Initialize GameWorld to contain ArrayLists of GameObjects
         gameWorld = new GameWorld();
-        listOfTowers = new ArrayList<Tower>();
-        listOfEnemies = new ArrayList<Enemy>();
-        listOfBullets = new ArrayList<Bullet>();
 
         //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
         Point startPosition = new Point(0, (int)(size.y * 0.5));
-        listOfEnemies.clear();
-        listOfEnemies.add(new BasicAlien(startPosition));
+        gameWorld.enemyArrayList.clear();
+        gameWorld.enemyArrayList.add(new BasicAlien(startPosition));
 
 
         // Initialize the drawing objects for the visuals of the game
@@ -138,20 +131,20 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
         // TODO: Make all enemies move while towers attack
-        for(Enemy enemy: listOfEnemies) {
+        for(Enemy enemy: gameWorld.enemyArrayList) {
             enemy.move();
         }
 
-       /* for(Tower tower: listOfTowers) {
+       /* for(Tower tower: gameWorld.towerArrayList) {
             tower.attack(mCanvas, mPaint);
         }
 */
 
         // TODO: If enemy reached the end of the static path, decrement userLives
-        for (int i = 0; i < listOfEnemies.size(); i++) {
-            // System.out.println("Enemy "+ i + ": " + listOfEnemies.get(i).getLocation().x + " Width: " + mCanvas.getWidth());
-            if (listOfEnemies.get(i).getLocation().x > 1440) {
-                listOfEnemies.remove(i);
+        for (int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
+            // System.out.println("Enemy "+ i + ": " + gameWorld.enemyArrayList.get(i).getLocation().x + " Width: " + mCanvas.getWidth());
+            if (gameWorld.enemyArrayList.get(i).getLocation().x > 1440) {
+                gameWorld.enemyArrayList.remove(i);
                 lives--;
             }
         }
@@ -180,12 +173,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // TODO: Draw every tower. (Towers are to be stored in an ArrayList<Tower> . This for loop utilizes polymorphism to print all)
-            for(Tower t: listOfTowers) {
+            for(Tower t: gameWorld.towerArrayList) {
                 t.draw(mCanvas, mPaint);
             }
 
             // TODO: Draw the enemies
-            for(Enemy enemy: listOfEnemies) {
+            for(Enemy enemy: gameWorld.enemyArrayList) {
                 enemy.draw(mCanvas, mPaint);
             }
 
@@ -242,7 +235,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 // if building tower and tapping in green area of map, tower is created
                 if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
                     // Build new tower
-                    listOfTowers.add(new MachineGunTower(new Point((int) x, (int) y)));
+                    gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
                     System.out.println("Tower built");
                     buildingMGTower = false;
                 }
