@@ -21,7 +21,7 @@ public class UserInterface {
         this.paused = paused;
     }
 
-    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean mPaused) {
+    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean mPaused, boolean gameOver) {
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
 
@@ -30,11 +30,24 @@ public class UserInterface {
         mCanvas.drawRect(width, height, (float) (width * 0.8), 0, mPaint);
         mPaint.setTextSize(40);
         mPaint.setColor(Color.BLACK);
-        drawLivesAndGold(mCanvas, mPaint, lives, gold);
+        if(lives > 0 && !gameOver) {
+            drawLivesAndGold(mCanvas, mPaint, lives, gold);
+        }
+        else {
+            drawNewGameText(mCanvas, mPaint);
+        }
         drawPauseButton(mCanvas, mPaint, mPaused);
 
         // Build basic tower
         drawTowerBuilder(mCanvas, mPaint);
+    }
+
+    private void drawNewGameText(Canvas mCanvas, Paint mPaint) {
+        mPaint.setColor(Color.DKGRAY);
+        //mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.72), (float) (width * 0.98), (float) (height * 0.84), mPaint);
+        mPaint.setColor(Color.WHITE);
+        mPaint.setTextSize(50);
+        mCanvas.drawText("Game Over! Click anywhere to reset!", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
     }
 
     public void drawTowerBuilder(Canvas mCanvas, Paint mPaint) {

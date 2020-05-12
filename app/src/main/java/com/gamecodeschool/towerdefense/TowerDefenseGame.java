@@ -47,6 +47,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private boolean mStarted;
     private boolean mPlaying;
     private boolean mPaused;
+    private boolean gameOver;
     private boolean buildingMGTower;
 
     // List of GameObjects
@@ -69,7 +70,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         // TODO: Insert Game Objects Initialization Here
         gameMap = new HardMap(mCanvas);
-        lives = 10;
+        lives = 1;
         gold = 500;
         mUserInterface = new UserInterface(lives, gold, mPaused);
 
@@ -92,8 +93,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     public void newGame() {
         mStarted = true;
         mPaused = false;
+        gameOver = false;
         // TODO: Reset the number of lives and gold that the user has
-        lives = 10;
+        lives = 1;
         gold = 500;
 
         // TODO: Reset the whole canvas
@@ -149,13 +151,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
         }
 
-        for(Tower tower: listOfTowers) {
+        /*for(Tower tower: listOfTowers) {
             tower.spawnBullet(listOfBullets);
         }
-
+        */
 
         // TODO: If we ran out of Lives, then the user loses. End Game
-        //mStarted = false;
+        if(lives == 0) {
+            gameOver = true;
+        }
     }
 
     // Do all the drawing (interface) for the application
@@ -188,7 +192,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
 
             // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused);
+            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
 
             // TODO: Draw the text for when the game is paused
             if(!mStarted) {
@@ -213,8 +217,14 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         float x = motionEvent.getX();
         float y = motionEvent.getY();
 
+        if(gameOver) {
+            mStarted = false;
+            mPaused = true;
+            lives = 10;
+            gameOver = false;
+        }
         // button to start game, then acts as a pause/resume button
-        if (playButtonPressed(x, y)) {
+        else if (playButtonPressed(x, y)) {
             if (!mStarted) {
                 newGame();
                 mPlaying = true;
