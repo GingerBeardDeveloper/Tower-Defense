@@ -1,6 +1,7 @@
 package com.gamecodeschool.towerdefense;
 
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import android.content.Context;
@@ -16,6 +17,8 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.util.Log.e;
+
 
 class TowerDefenseGame extends SurfaceView implements Runnable {
 
@@ -25,7 +28,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
     private int lives, gold;
     private Map gameMap;
-
+    private int counter;
     // Attributes for pixels of the game
     Context context;
     int blockSize;
@@ -44,6 +47,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private boolean mStarted;
     private boolean mPlaying;
     private boolean mPaused;
+    private boolean gameOver;
     private boolean buildingMGTower;
 
     // List of GameObjects
@@ -56,7 +60,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         super(context);
         this.context = context;
         this.grid = new Grid(size);
-        mPaused = true; //game initially paused
+        mPaused = true;
         mStarted = false;
 
         // TODO: Add Sound Strategy Later
@@ -84,6 +88,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Called to start a new game
     public void newGame() {
         mStarted = true;
+        mPaused = false;
+        gameOver = false;
         // TODO: Reset the number of lives and gold that the user has
         lives = 10;
         gold = 500;
@@ -130,9 +136,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Purpose of this method is to move all of the movable objects in the game
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
+        counter++;
         // TODO: Make all enemies move while towers attack
         for(Enemy enemy: gameWorld.enemyArrayList) {
             enemy.move();
+            // After they move, if they reached end of path, decrement lives
+            if (enemy.getLocation().x > 1440) {
+                listOfEnemies.remove(enemy);
+                lives--;
+            }
         }
 
        /* for(Tower tower: gameWorld.towerArrayList) {
@@ -150,7 +162,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         }
 
         // TODO: If we ran out of Lives, then the user loses. End Game
-        //mStarted = false;
+        if(lives == 0) {
+            gameOver = true;
+        }
     }
 
     // Do all the drawing (interface) for the application
@@ -160,7 +174,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // TODO: Draw the Grid
-            grid.draw(mCanvas, mPaint);
+            //grid.draw(mCanvas, mPaint);
 
             // TODO: Draw the Path
             gameMap.draw(mCanvas);
@@ -183,11 +197,19 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
 
             // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint, lives, gold);
+            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
 
             // TODO: Draw the text for when the game is paused
-            if(!mPlaying) {
+            if(!mStarted) {
+                mCanvas.drawText("To start game, press PLAY", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
+            }
+
+            if(mPaused && mStarted) {
                 mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
+            }
+
+            if(buildingMGTower) {
+                mCanvas.drawText("Please place tower", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.9), mPaint);
             }
 
             // Unlock the mCanvas and reveal the graphics for this frame
@@ -200,22 +222,24 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         float x = motionEvent.getX();
         float y = motionEvent.getY();
 
-        // Check if pause button was pressed
-        if (playButtonPressed(x, y)) {
+        if(gameOver) {
+            mStarted = false;
+            mPaused = true;
+            lives = 10;
+            gameOver = false;
+        }
+        // button to start game, then acts as a pause/resume button
+        else if (playButtonPressed(x, y)) {
             if (!mStarted) {
                 newGame();
                 mPlaying = true;
             }
+            // functions as a pause/resume button
             else {
-                // if it's not paused, pause it, and set the pause var true
                 if (!mPaused) {
-                    pause();
                     mPaused = true;
-                    System.out.println("Game currently Paused");
                 } else {
-                    resume();
                     mPaused = false;
-                    System.out.println("Game currently Playing");
                 }
             }
         // Check if Build tower button is pressed
@@ -270,7 +294,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         try {
             mThread.join();
         } catch (InterruptedException e) {
-            // Error
+            Log.e("Error:", "joining thread");
         }
     }
 

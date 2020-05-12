@@ -1,18 +1,21 @@
 package com.gamecodeschool.towerdefense;
 
 import android.graphics.Point;
+import android.graphics.RectF;
 
 class Projectile extends MoveableObject {
 
     private double damage;
     private double speed;
     private double mSize;
+    private RectF rect;
 
     // The projectile gets its damage, range, and speed from the tower that instantiates it
     public Projectile(Point location, double damage, double speed) {
         super(location);
         this.damage = damage;
         this.speed = speed;
+        this.heading = 0;
         changeHeading(90.0);
     }
 
@@ -29,9 +32,5 @@ class Projectile extends MoveableObject {
         setLocation(new Point((int) dx, (int) dy));
     }
 
-    // If the projectile is within range of an enemy, then reduce the hp of the enemy
-    public boolean contactsEnemy() {
-        return false;
-    }
-
+    public RectF getRect() { return this.rect; }
 }

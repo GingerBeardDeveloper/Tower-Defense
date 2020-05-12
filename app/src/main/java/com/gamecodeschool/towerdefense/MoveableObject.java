@@ -7,7 +7,7 @@ import android.graphics.Point;
 abstract class MoveableObject extends GameObject {
 
     // Heading is a number between 0 and 359 to represent the heading in degrees
-    protected double heading;
+    protected double heading = 0;
     protected double speed;
 
     public MoveableObject(Point location) {
