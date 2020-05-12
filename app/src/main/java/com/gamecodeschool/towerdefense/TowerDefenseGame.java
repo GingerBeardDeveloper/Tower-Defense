@@ -47,6 +47,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private boolean buildingMGTower;
 
     // List of GameObjects
+    private GameWorld gameWorld;
     private int currentWaveNumber;
     private List<Tower> listOfTowers;
     //private ArrayList<ArrayList<Enemy>> waveOfEnemies = new ArrayList<ArrayList<Enemy>>();
@@ -70,6 +71,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         gold = 500;
         mUserInterface = new UserInterface(lives, gold, mPaused);
 
+        // Initialize GameWorld to contain ArrayLists of GameObjects
+        gameWorld = new GameWorld();
         listOfTowers = new ArrayList<Tower>();
         listOfEnemies = new ArrayList<Enemy>();
         listOfBullets = new ArrayList<Bullet>();
