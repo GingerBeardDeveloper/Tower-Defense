@@ -62,7 +62,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         super(context);
         this.context = context;
         this.grid = new Grid(size);
-        mPaused = true; //game initially paused
+        mPaused = true;
         mStarted = false;
 
         // TODO: Add Sound Strategy Later
@@ -188,10 +188,14 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
 
             // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint, lives, gold);
+            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused);
 
             // TODO: Draw the text for when the game is paused
-            if(mPaused) {
+            if(!mStarted) {
+                mCanvas.drawText("To start game, press PLAY", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
+            }
+
+            if(mPaused && mStarted) {
                 mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
             }
 

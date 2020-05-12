@@ -21,7 +21,7 @@ public class UserInterface {
         this.paused = paused;
     }
 
-    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold) {
+    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean mPaused) {
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
 
@@ -31,7 +31,7 @@ public class UserInterface {
         mPaint.setTextSize(40);
         mPaint.setColor(Color.BLACK);
         drawLivesAndGold(mCanvas, mPaint, lives, gold);
-        drawPauseButton(mCanvas, mPaint);
+        drawPauseButton(mCanvas, mPaint, mPaused);
 
         // Build basic tower
         drawTowerBuilder(mCanvas, mPaint);
@@ -46,12 +46,12 @@ public class UserInterface {
     }
 
     // Deals with the pause button and the toggle feature
-    public void drawPauseButton(Canvas mCanvas, Paint mPaint) {
+    public void drawPauseButton(Canvas mCanvas, Paint mPaint, boolean mPaused) {
         mPaint.setColor(Color.DKGRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.86), (float) (width * 0.98), (float) (height * 0.98), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(100);
-        if (paused) {
+        if (mPaused) {
             mCanvas.drawText("Play", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
         } else {
             mCanvas.drawText("Pause", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.95), mPaint);
