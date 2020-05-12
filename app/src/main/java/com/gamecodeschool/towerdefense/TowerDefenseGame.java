@@ -316,7 +316,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         if (!gameWorld.enemyArrayList.isEmpty()) {
             Point enemyLocation = gameWorld.enemyArrayList.get(0).getLocation();
             for (Tower tower: gameWorld.towerArrayList) {
-                double heading = Math.toDegrees(Math.atan((float) (enemyLocation.y - tower.location.y) / (enemyLocation.x - tower.location.x)));
+                double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
                 gameWorld.bulletArrayList.add(tower.shoot(heading));
             }
         }
