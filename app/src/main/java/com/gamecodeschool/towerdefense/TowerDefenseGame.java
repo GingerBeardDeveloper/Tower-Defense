@@ -77,7 +77,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
         Point startPosition = new Point(0, (int)(size.y * 0.5));
         gameWorld.enemyArrayList.clear();
-        gameWorld.enemyArrayList.add(new BasicAlien(startPosition));
+        gameWorld.enemyArrayList.add(new BasicAlien(startPosition, context));
 
 
         // Initialize the drawing objects for the visuals of the game
@@ -142,7 +142,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             enemy.move();
             // After they move, if they reached end of path, decrement lives
             if (enemy.getLocation().x > 1440) {
-                listOfEnemies.remove(enemy);
+                gameWorld.enemyArrayList.remove(enemy);
                 lives--;
             }
         }

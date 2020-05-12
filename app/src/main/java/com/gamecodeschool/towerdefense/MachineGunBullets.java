@@ -11,8 +11,8 @@ public class MachineGunBullets extends Projectile {
 
     private RectF mRect;
 
-    public MachineGunBullets(Point location, double damage, double range, double speed) {
-        super(location, damage, range, speed);
+    public MachineGunBullets(Point location, double damage, double speed) {
+        super(location, damage, speed);
         mRect = new RectF(location.x, location.y, location.x+10, location.y+10);
     }
 
