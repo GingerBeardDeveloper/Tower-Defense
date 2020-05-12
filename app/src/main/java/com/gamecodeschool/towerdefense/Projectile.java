@@ -5,15 +5,13 @@ import android.graphics.Point;
 class Projectile extends MoveableObject {
 
     private double damage;
-    private double range;
     private double speed;
     private double mSize;
 
     // The projectile gets its damage, range, and speed from the tower that instantiates it
-    public Projectile(Point location, double damage, double range, double speed) {
+    public Projectile(Point location, double damage, double speed) {
         super(location);
         this.damage = damage;
-        this.range = range;
         this.speed = speed;
         changeHeading(90.0);
     }
