@@ -23,7 +23,7 @@ import static android.util.Log.e;
 class TowerDefenseGame extends SurfaceView implements Runnable {
 
     // Objects for the game loop/thread
-    private Thread mThread = new Thread();
+    private Thread mThread = null;
     private long mNextFrameTime;
 
     private int lives, gold;
@@ -91,6 +91,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Called to start a new game
     public void newGame() {
         mStarted = true;
+        mPaused = false;
         // TODO: Reset the number of lives and gold that the user has
         lives = 10;
         gold = 500;
@@ -213,12 +214,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             else {
                 // if it's not paused, pause it, and set the pause var true
                 if (!mPaused) {
-                    pause();
+                    //pause();
                     mPaused = !mPaused;
                     System.out.println("Game currently Paused");
                 } else {
-                    resume();
-                    mNextFrameTime = System.currentTimeMillis();
+                    //resume();
                     mPaused = false;
                     System.out.println("Game currently Playing");
                 }
