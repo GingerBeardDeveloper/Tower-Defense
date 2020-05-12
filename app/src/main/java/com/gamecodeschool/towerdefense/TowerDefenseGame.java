@@ -191,10 +191,14 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mUserInterface.draw(mCanvas, mPaint, lives, gold);
 
             // TODO: Draw the text for when the game is paused
-          /*  if(!mPlaying) {
+            if(mPaused) {
                 mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
             }
-        */
+
+            if(buildingMGTower) {
+                mCanvas.drawText("Please place tower", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.9), mPaint);
+            }
+
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
@@ -205,22 +209,18 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         float x = motionEvent.getX();
         float y = motionEvent.getY();
 
-        // Check if pause button was pressed
+        // button to start game, then acts as a pause/resume button
         if (playButtonPressed(x, y)) {
             if (!mStarted) {
                 newGame();
                 mPlaying = true;
             }
+            // functions as a pause/resume button
             else {
-                // if it's not paused, pause it, and set the pause var true
                 if (!mPaused) {
-                    //pause();
-                    mPaused = !mPaused;
-                    System.out.println("Game currently Paused");
+                    mPaused = true;
                 } else {
-                    //resume();
                     mPaused = false;
-                    System.out.println("Game currently Playing");
                 }
             }
         // Check if Build tower button is pressed
