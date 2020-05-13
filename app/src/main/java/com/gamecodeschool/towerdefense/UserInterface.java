@@ -59,7 +59,7 @@ public class UserInterface {
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(40);
         mCanvas.drawText("MG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.77), mPaint);
-        mCanvas.drawText("200 Coins", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.81), mPaint);
+        mCanvas.drawText("200 Gold", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.81), mPaint);
 
         // SG Tower Button
         mPaint.setColor(Color.GRAY);
@@ -67,7 +67,7 @@ public class UserInterface {
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(40);
         mCanvas.drawText("SG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.63), mPaint);
-        mCanvas.drawText("150 Coins", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.67), mPaint);
+        mCanvas.drawText("150 Gold", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.67), mPaint);
 
         // S Tower Button
         mPaint.setColor(Color.LTGRAY);
@@ -75,7 +75,7 @@ public class UserInterface {
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(40);
         mCanvas.drawText("Sniper Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.49), mPaint);
-        mCanvas.drawText("100 Coins", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.53), mPaint);
+        mCanvas.drawText("100 Gold", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.53), mPaint);
     }
 
     // Deals with the pause button and the toggle feature

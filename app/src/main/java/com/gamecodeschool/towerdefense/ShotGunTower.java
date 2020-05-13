@@ -11,7 +11,7 @@ class ShotGunTower extends Tower {
 
     public ShotGunTower(Point location) {
         super(location);
-        this.damage = 10;
+        this.damage = 25;
         this.range = 20;
         this.speed = 4;
     }
