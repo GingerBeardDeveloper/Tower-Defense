@@ -1,11 +1,9 @@
 package com.gamecodeschool.towerdefense;
 
-import android.graphics.RectF;
 import android.util.Log;
 import android.view.SurfaceView;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,12 +11,8 @@ import android.graphics.Point;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 
 import androidx.annotation.RequiresApi;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.util.Log.e;
 
@@ -55,6 +49,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private boolean mPaused;
     private boolean gameOver;
     private boolean buildingMGTower;
+    private boolean buildingSGTower;
+    private boolean buildingSTower;
 
     // List of GameObjects
     private GameWorld gameWorld;
@@ -234,7 +230,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 mCanvas.drawText("Currently Paused", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
-            if (buildingMGTower) {
+            if (buildingMGTower || buildingSGTower || buildingSTower) {
                 mCanvas.drawText("Please place tower", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.9), mPaint);
             }
 
@@ -270,36 +266,68 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 }
             }
         // Check if Build tower button is pressed
-        }
-        else if (buildTowerButton(x, y)) {
+        } else if (buildMGTowerButton(x, y)) {
             if (buildingMGTower) {
                 buildingMGTower = false;
-                System.out.println("Cancelled building tower");
             } else {
                 buildingMGTower = true;
-                System.out.println("Building tower");
+            }
+        } else if (buildSGTowerButton(x, y)) {
+            if (buildingSGTower) {
+                buildingSGTower = false;
+            } else {
+                buildingSGTower = true;
+            }
+        } else if (buildSTowerButton(x, y)) {
+            if (buildingSTower) {
+                buildingSTower = false;
+            } else {
+                buildingSTower = true;
             }
         }
 
-        if (buildingMGTower) {
-            if (x < mCanvas.getWidth() * 0.82) {
-                // if building tower and tapping in green area of map, tower is created
-                if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
-                    // Build new tower
+
+        if (x < mCanvas.getWidth() * 0.82) {
+            // if building tower and tapping in green area of map, tower is created
+            if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
+                if (buildingMGTower) {
+                    // Build new MGTower
                     gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
-                    System.out.println("Tower built");
                     buildingMGTower = false;
+                } else if (buildingSGTower) {
+                    // Build new tower
+                    gameWorld.towerArrayList.add(new ShotGunTower(new Point((int) x, (int) y)));
+                    buildingSGTower = false;
+                } else if (buildingSTower) {
+                    // Build new tower
+                    gameWorld.towerArrayList.add(new SniperTower(new Point((int) x, (int) y)));
+                    buildingSTower = false;
                 }
+
             }
         }
         return true;
     }
 
-    private boolean buildTowerButton(float x, float y) {
-        if((x > (mCanvas.getWidth() * 0.82)
-                && x < (mCanvas.getWidth() * 0.98))
-                && (y > (mCanvas.getHeight() * 0.72)
-                && y < (mCanvas.getHeight() * 0.84))) {
+    private boolean buildMGTowerButton(float x, float y) {
+        if((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98))
+                && (y > (mCanvas.getHeight() * 0.72) && y < (mCanvas.getHeight() * 0.84))) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean buildSGTowerButton(float x, float y) {
+        if ((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98)) &&
+                (y > (mCanvas.getHeight() * 0.58) && y < (mCanvas.getHeight() * 0.70))) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean buildSTowerButton(float x, float y) {
+        if ((x > (mCanvas.getWidth() * 0.82) && x < (mCanvas.getWidth() * 0.98)) &&
+                (y > (mCanvas.getHeight() * 0.44) && y < (mCanvas.getHeight() * 0.56))) {
             return true;
         }
         return false;

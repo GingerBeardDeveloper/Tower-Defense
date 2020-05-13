@@ -51,11 +51,26 @@ public class UserInterface {
     }
 
     public void drawTowerBuilder(Canvas mCanvas, Paint mPaint) {
+        // MG Tower Button
         mPaint.setColor(Color.DKGRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.72), (float) (width * 0.98), (float) (height * 0.84), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(50);
         mCanvas.drawText("MG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.80), mPaint);
+
+        // SG Tower Button
+        mPaint.setColor(Color.DKGRAY);
+        mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.58), (float) (width * 0.98), (float) (height * 0.70), mPaint);
+        mPaint.setColor(Color.WHITE);
+        mPaint.setTextSize(50);
+        mCanvas.drawText("SG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.66), mPaint);
+
+        // S Tower Button
+        mPaint.setColor(Color.DKGRAY);
+        mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.44), (float) (width * 0.98), (float) (height * 0.56), mPaint);
+        mPaint.setColor(Color.WHITE);
+        mPaint.setTextSize(50);
+        mCanvas.drawText("S Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.52), mPaint);
     }
 
     // Deals with the pause button and the toggle feature
