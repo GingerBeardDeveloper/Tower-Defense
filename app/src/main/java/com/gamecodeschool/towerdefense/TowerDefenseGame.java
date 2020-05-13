@@ -30,10 +30,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     private Map gameMap;
     private int counter;
     // Attributes for pixels of the game
-    Context context;
+    private Context context;
+    private Point size;
     int blockSize;
     private int mNumBlocksHigh;
     private final int NUM_BLOCKS_WIDE = 40;
+    private int waveNumber;
 
     // Objects for drawing
     private Grid grid;
@@ -59,6 +61,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     public TowerDefenseGame(Context context, Point size) {
         super(context);
         this.context = context;
+        this.size = size;
         this.grid = new Grid(size);
         mPaused = true;
         mStarted = false;
@@ -73,11 +76,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
 
         // Initialize GameWorld to contain ArrayLists of GameObjects
         gameWorld = new GameWorld();
+        initializeEnemies();
 
         //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
-        Point startPosition = new Point(0, (int)(size.y * 0.5));
-        gameWorld.enemyArrayList.clear();
-        gameWorld.enemyArrayList.add(new BasicAlien(startPosition, context));
+        //Point startPosition = new Point(0, (int)(size.y * 0.5));
+        //gameWorld.enemyArrayList.clear();
+        //gameWorld.enemyArrayList.add(new BasicAlien(startPosition, context));
 
 
         // Initialize the drawing objects for the visuals of the game
@@ -93,11 +97,19 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         // TODO: Reset the number of lives and gold that the user has
         lives = 10;
         gold = 500;
+        waveNumber = 0;
 
         // TODO: Reset the whole canvas
+        //initializeEnemies();
 
         // Forces an update to be triggered
         mNextFrameTime = System.currentTimeMillis();
+    }
+
+    private void initializeEnemies() {
+
+        Wave wave = new Wave(size, context);
+        this.gameWorld.enemyArrayList = wave.getEnemies();
     }
 
     // Handles the game loop
@@ -133,12 +145,13 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         return false;
     }
 
-    // Purpose of this method is to move all of the movable objects in the game
+    // Purpose of this method is to move all of the movable objects in the game. The 'visual' of each thing is not drawn here. Just the underlying features
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
         counter++;
         // TODO: Make all enemies move while towers attack
-        for(Enemy enemy: gameWorld.enemyArrayList) {
+        // If enemy reached the end of the static path, decrement userLives
+        for(Enemy enemy: gameWorld.enemyArrayList.get(waveNumber)) {
             enemy.move();
             // After they move, if they reached end of path, decrement lives
             if (enemy.getLocation().x > 1440) {
@@ -147,19 +160,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
         }
 
-       /* for(Tower tower: gameWorld.towerArrayList) {
-            tower.attack(mCanvas, mPaint);
-        }
-*/
-
-        // TODO: If enemy reached the end of the static path, decrement userLives
-        for (int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
-            // System.out.println("Enemy "+ i + ": " + gameWorld.enemyArrayList.get(i).getLocation().x + " Width: " + mCanvas.getWidth());
-            if (gameWorld.enemyArrayList.get(i).getLocation().x > 1440) {
-                gameWorld.enemyArrayList.remove(i);
-                lives--;
-            }
-        }
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         if(lives == 0) {
@@ -172,9 +172,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         // Lock the canvas, do a drawing, and at the end, present it
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
-
-            // TODO: Draw the Grid
-            //grid.draw(mCanvas, mPaint);
 
             // TODO: Draw the Path
             gameMap.draw(mCanvas);
@@ -192,7 +189,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
 
             // TODO: Draw the enemies
-            for(Enemy enemy: gameWorld.enemyArrayList) {
+            for(Enemy enemy: gameWorld.enemyArrayList.get(waveNumber)) {
                 enemy.draw(mCanvas, mPaint);
             }
 

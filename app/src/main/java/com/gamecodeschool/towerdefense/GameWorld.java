@@ -5,12 +5,12 @@ import java.util.ArrayList;
 class GameWorld {
     // Array lists of GameObjects
     public ArrayList<Tower> towerArrayList;
-    public ArrayList<Enemy> enemyArrayList;
+    public ArrayList<ArrayList<Enemy>> enemyArrayList;
     public ArrayList<Bullet> bulletArrayList;
 
     public GameWorld() {
         towerArrayList = new ArrayList<Tower>();
-        enemyArrayList = new ArrayList<Enemy>();
+        enemyArrayList = new ArrayList<ArrayList<Enemy>>();
         bulletArrayList = new ArrayList<Bullet>();
     }
 
