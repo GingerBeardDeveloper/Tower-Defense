@@ -110,7 +110,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private void initializeEnemies() {
 
         Wave wave = new Wave(size, context);
-        this.gameWorld.enemyArrayList = wave.getEnemies();
+        this.gameWorld.enemyArrayList = wave.getEnemies(waveNumber);
     }
 
     // Handles the game loop
@@ -176,11 +176,11 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 lives--;
         }*/
         for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
-            for(int j = 0; j < gameWorld.enemyArrayList.get(waveNumber).size(); j++) {
-                Enemy e = gameWorld.enemyArrayList.get(waveNumber).get(j);
+            for(int j = 0; j < gameWorld.enemyArrayList.size(); j++) {
+                Enemy e = gameWorld.enemyArrayList.get(j);
                 e.move();
                 if (e.getLocation().x > 1440) {
-                    gameWorld.enemyArrayList.get(waveNumber).remove(e);
+                    gameWorld.enemyArrayList.remove(e);
                     lives--;
                 }
             }
@@ -221,10 +221,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             }
 
             // Draw the enemies
-            for (ArrayList<Enemy> list : gameWorld.enemyArrayList) {
+            //for (ArrayList<Enemy> list : gameWorld.enemyArrayList) {
                 // TODO: Draw the enemies
-                for (Enemy enemy : gameWorld.enemyArrayList.get(waveNumber)) {
-
+                for (Enemy enemy : gameWorld.enemyArrayList) {
                     enemy.draw(mCanvas, mPaint);
                 }
 
@@ -247,8 +246,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 // Unlock the mCanvas and reveal the graphics for this frame
                 mSurfaceHolder.unlockCanvasAndPost(mCanvas);
             }
-        }
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {

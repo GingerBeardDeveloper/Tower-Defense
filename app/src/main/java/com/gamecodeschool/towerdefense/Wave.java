@@ -24,8 +24,8 @@ public class Wave {
         setupWaves();
     }
 
-    public ArrayList<ArrayList<Enemy>> getEnemies() {
-        return listOfEnemies;
+    public ArrayList<Enemy> getEnemies(int waveNumber) {
+        return listOfEnemies.get(waveNumber);
     }
 
     private void setupWaves() {

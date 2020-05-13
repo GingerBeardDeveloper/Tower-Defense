@@ -46,7 +46,7 @@ public class HardMap extends Map {
         this.endOfPath = endOfPath = new Point((int)(mCanvas.getWidth() * 0.8), (int)(mCanvas.getHeight() * 0.5));
     }
     // creates a predefined list of waves of aliens
-    private void setupWaves(int numWaves) {
+    /*private void setupWaves(int numWaves) {
         for (int i = 0; i < numWaves; i++) {
             alienWaves.add(new Wave(5, 2));
         }
@@ -61,7 +61,7 @@ public class HardMap extends Map {
         }
 
         spaceEnemiesApart();
-    }
+    }*/
 
     private void spaceEnemiesApart() {
         int counter = 0;
