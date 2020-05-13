@@ -8,30 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Wave {
+public class WaveGenerator {
 
     private Context context;
     private Point location;
 
-
-  //  ArrayList<ArrayList<Enemy>> listOfEnemies = new ArrayList<ArrayList<Enemy>>();
-
-    public Wave(Point location, Context context) {
+    public WaveGenerator(Point location, Context context) {
         this.location = location;
         this.context = context;
- //       setupWaves();
     }
-
-   // public ArrayList<Enemy> getEnemies(int waveNumber) {
-     //   return listOfEnemies.get(waveNumber);
-    //}
 
     public ArrayList<Enemy> getRandomWave() {
         Random rand = new Random();
         Point start = new Point(0, location.y/2);
         ArrayList<Enemy> randomWave = new ArrayList<Enemy>();
 
-        for(int i = 0; i < 30; i++) {
+        for(int i = 0; i < 10; i++) {
             int randomNumber = rand.nextInt(100);
             if(randomNumber <= 70) {
                 randomWave.add(new BasicAlien(start, context));

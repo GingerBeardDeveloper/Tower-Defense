@@ -30,9 +30,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     // Attributes for pixels of the game
     private Context context;
     private Point size;
-    int blockSize;
-    private int mNumBlocksHigh;
-    private final int NUM_BLOCKS_WIDE = 40;
     private int waveNumber;
 
     // Objects for drawing
@@ -48,21 +45,20 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private boolean mPlaying;
     private boolean mPaused;
     private boolean gameOver;
+    private boolean waveCleared;
     private boolean buildingMGTower;
     private boolean buildingSGTower;
     private boolean buildingSTower;
 
     // List of GameObjects
     private GameWorld gameWorld;
-    private int currentWaveNumber;
-
-
 
     public TowerDefenseGame(Context context, Point size) {
         super(context);
         this.context = context;
         this.size = size;
         this.grid = new Grid(size);
+        this.waveNumber = 1;
         mPaused = true;
         mStarted = false;
 
@@ -76,14 +72,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
 
         // Initialize GameWorld to contain ArrayLists of GameObjects
         gameWorld = new GameWorld();
-        initializeEnemies();
-
-        //Point start =  new Point(0, (int)(mCanvas.getHeight() * 0.5));
-        //Point startPosition = new Point(0, (int)(size.y * 0.5));
-        //gameWorld.enemyArrayList.clear();
-        //gameWorld.enemyArrayList.add(new BasicAlien(startPosition, context));
-
-
+        getNextWave();
         // Initialize the drawing objects for the visuals of the game
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
@@ -93,23 +82,26 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     public void newGame() {
         mStarted = true;
         mPaused = false;
-        gameOver = false;
         // TODO: Reset the number of lives and gold that the user has
         lives = 10;
         gold = 500;
         waveNumber = 0;
 
         // TODO: Reset the whole canvas
-        //initializeEnemies();
+        if(gameOver) {
+            gameWorld.bulletArrayList.clear();
+            gameWorld.towerArrayList.clear();
+            gameOver = false;
+        }
+        getNextWave();
 
         // Forces an update to be triggered
         mNextFrameTime = System.currentTimeMillis();
     }
 
-    private void initializeEnemies() {
-
-        Wave wave = new Wave(size, context);
-        this.gameWorld.enemyArrayList = wave.getRandomWave();
+    private void getNextWave() {
+        WaveGenerator waveGenerator = new WaveGenerator(size, context);
+        this.gameWorld.enemyArrayList = waveGenerator.getRandomWave();
     }
 
     // Handles the game loop
@@ -146,7 +138,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         return false;
     }
 
-    // Purpose of this method is to move all of the movable objects in the game. The 'visual' of each thing is not drawn here. Just the underlying features
+    // Purpose of this method is to move all of the movable objects in the game.
+    // The 'visual' of each thing is not drawn here. Just the underlying features
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void update() {
@@ -176,7 +169,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         }
 
         // TODO: If the wave is empty, increment it
-
+        if(gameWorld.enemyArrayList.isEmpty() && lives > 0) {
+            waveNumber++;
+            waveCleared = true;
+            mPaused = true;
+            getNextWave();
+        }
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         if(lives == 0) {
@@ -227,12 +225,16 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 mCanvas.drawText("To start game, press PLAY", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
-            if (mPaused && mStarted) {
+            if (mPaused && mStarted && !gameOver && !waveCleared) {
                 mCanvas.drawText("Currently Paused", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
             if (buildingMGTower || buildingSGTower || buildingSTower) {
                 mCanvas.drawText("Please place tower", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.9), mPaint);
+            }
+
+            if (waveCleared) {
+                mCanvas.drawText("Wave Completed! Prepare for the next wave! ", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
             // Unlock the mCanvas and reveal the graphics for this frame
@@ -247,10 +249,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         float y = motionEvent.getY();
 
         if(gameOver) {
-            mStarted = false;
-            mPaused = true;
-            lives = 10;
-            gameOver = false;
+            newGame();
         }
         // button to start game, then acts as a pause/resume button
         else if (playButtonPressed(x, y)) {
@@ -285,6 +284,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             } else {
                 buildingSTower = true;
             }
+        } else if(waveCleared) {
+            waveCleared = false;
+            mPaused = false;
         }
 
 

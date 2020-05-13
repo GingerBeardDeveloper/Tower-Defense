@@ -47,7 +47,7 @@ public class UserInterface {
         //mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.72), (float) (width * 0.98), (float) (height * 0.84), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(50);
-        mCanvas.drawText("Game Over! Click anywhere to reset!", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
+        mCanvas.drawText("Game Over! Click anywhere to reset!", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.8), mPaint);
     }
 
     public void drawTowerBuilder(Canvas mCanvas, Paint mPaint) {

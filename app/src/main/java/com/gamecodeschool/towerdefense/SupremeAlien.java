@@ -13,7 +13,7 @@ public class SupremeAlien extends Enemy {
 
     public SupremeAlien(Point location, Context context) {
         super(location);
-        this.hp = 2000;
+        this.hp = 500;
         this.speed = 5;
         this.alive = true;
         this.heading = 0.0;

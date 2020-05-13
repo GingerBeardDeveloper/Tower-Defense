@@ -12,7 +12,7 @@ public class AlienSpaceship extends Enemy {
 
     public AlienSpaceship(Point location, Context context) {
         super(location);
-        this.hp = 5000;
+        this.hp = 1000;
         this.speed = 3;
         this.alive = true;
         this.heading = 0.0;
