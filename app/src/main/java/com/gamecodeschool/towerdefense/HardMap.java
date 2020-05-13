@@ -16,6 +16,7 @@ public class HardMap extends Map {
     Point startOfPath;
     Point endOfPath;
 
+
     public HardMap(Canvas mCanvas) {
         //start = new Point(mCanvas.getWidth(), mCanvas.getHeight() / 2);
         //end = new Point((int) (mCanvas.getWidth() * 0.2),mCanvas.getHeight() / 2);
