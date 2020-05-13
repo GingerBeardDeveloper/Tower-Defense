@@ -9,6 +9,7 @@ class Projectile extends MoveableObject {
     private double speed;
     private double mSize;
     private RectF rect;
+    private boolean hasCollided;
 
 
     // The projectile gets its damage, range, and speed from the tower that instantiates it
@@ -18,6 +19,7 @@ class Projectile extends MoveableObject {
         this.speed = speed;
         this.heading = 0;
         changeHeading(90.0);
+        hasCollided = false;
     }
 
     /**
@@ -35,5 +37,13 @@ class Projectile extends MoveableObject {
 
     public double getDamage() {
         return damage;
+    }
+
+    public void collide() {
+        hasCollided = true;
+    }
+
+    public boolean hasCollided() {
+        return hasCollided;
     }
 }

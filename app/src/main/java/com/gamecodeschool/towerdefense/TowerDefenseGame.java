@@ -153,6 +153,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         counter++;
 
         collisionCheck();
+        // Remove dead enemies and bullets that have collided
+        gameWorld.enemyArrayList.removeIf(enemy -> !enemy.isAlive());
+        gameWorld.bulletArrayList.removeIf(bullet -> bullet.hasCollided());
 
         // TODO: If enemy reached the end of the static path, decrement userLives
         for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
@@ -174,9 +177,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable
 
         // TODO: If the wave is empty, increment it
 
-
-        // Remove dead enemies
-        gameWorld.enemyArrayList.removeIf(enemy -> !enemy.isAlive());
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         if(lives == 0) {
@@ -293,15 +293,24 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
                 if (buildingMGTower) {
                     // Build new MGTower
-                    gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
+                    if (gold >= 200) {
+                        gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
+                        gold -= 200;
+                    }
                     buildingMGTower = false;
                 } else if (buildingSGTower) {
-                    // Build new tower
-                    gameWorld.towerArrayList.add(new ShotGunTower(new Point((int) x, (int) y)));
+                    // Build new SGTower
+                    if (gold >= 150) {
+                        gameWorld.towerArrayList.add(new ShotGunTower(new Point((int) x, (int) y)));
+                        gold -= 150;
+                    }
                     buildingSGTower = false;
                 } else if (buildingSTower) {
-                    // Build new tower
-                    gameWorld.towerArrayList.add(new SniperTower(new Point((int) x, (int) y)));
+                    // Build new SniperTower
+                    if (gold >= 100) {
+                        gameWorld.towerArrayList.add(new SniperTower(new Point((int) x, (int) y)));
+                        gold -= 100;
+                    }
                     buildingSTower = false;
                 }
 
@@ -394,7 +403,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             for (Enemy enemy : gameWorld.enemyArrayList) {
                 if (distance(bullet.location, enemy.location) < 20) {
                     enemy.takeDamage(bullet.getDamage());
-                    //gameWorld.bulletArrayList.remove(bullet);
+                    bullet.collide();
                 }
             }
         }

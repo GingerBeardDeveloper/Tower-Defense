@@ -13,7 +13,7 @@ class ShotGunTower extends Tower {
         super(location);
         this.damage = 10;
         this.range = 20;
-        this.speed = 3;
+        this.speed = 4;
     }
 
     @Override
