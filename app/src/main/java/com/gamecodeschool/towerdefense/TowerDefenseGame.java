@@ -109,7 +109,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private void initializeEnemies() {
 
         Wave wave = new Wave(size, context);
-        this.gameWorld.enemyArrayList = wave.getEnemies(waveNumber);
+        this.gameWorld.enemyArrayList = wave.getRandomWave();
     }
 
     // Handles the game loop
