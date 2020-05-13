@@ -13,7 +13,7 @@ class ShotGunTower extends Tower {
         super(location);
         this.damage = 10;
         this.range = 20;
-        this.speed = 20;
+        this.speed = 3;
     }
 
     @Override
@@ -27,9 +27,9 @@ class ShotGunTower extends Tower {
         ArrayList<Bullet> bulletsToShoot = new ArrayList<Bullet>();
         bulletsToShoot.add(new MachineGunBullets(location, heading, damage, speed));
         bulletsToShoot.add(new MachineGunBullets(location, heading + 10, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading + 5, damage, speed));
+        //bulletsToShoot.add(new MachineGunBullets(location, heading + 5, damage, speed));
         bulletsToShoot.add(new MachineGunBullets(location, heading - 10, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading - 5, damage, speed));
+        //bulletsToShoot.add(new MachineGunBullets(location, heading - 5, damage, speed));
         return bulletsToShoot;
     }
 }

@@ -13,7 +13,7 @@ class SniperTower extends Tower {
         super(location);
         this.damage = 100;
         this.range = 20;
-        this.speed = 40;
+        this.speed = 12;
     }
 
     @Override

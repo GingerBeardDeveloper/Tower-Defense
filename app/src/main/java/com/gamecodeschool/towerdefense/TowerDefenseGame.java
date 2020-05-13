@@ -14,6 +14,9 @@ import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +151,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable
 
     // Purpose of this method is to move all of the movable objects in the game. The 'visual' of each thing is not drawn here. Just the underlying features
     // After moving all objects, checks to see if gold is earned, or if specific events occur
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void update() {
+        counter++;
+
+        collisionCheck();
+
         // TODO: If enemy reached the end of the static path, decrement userLives
         for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
             Enemy e = gameWorld.enemyArrayList.get(i);
@@ -159,8 +167,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             }
         }
 
-
-        /*
         // Check if there are enemies on the screen and shoot if they exist
         shootTowers();
 
@@ -168,9 +174,12 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         for(Bullet bullet: gameWorld.bulletArrayList) {
             bullet.move();
         }
-        */
 
         // TODO: If the wave is empty, increment it
+
+
+        // Remove dead enemies
+        gameWorld.enemyArrayList.removeIf(enemy -> !enemy.isAlive());
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         if(lives == 0) {
@@ -277,7 +286,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 // if building tower and tapping in green area of map, tower is created
                 if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
                     // Build new tower
-                    gameWorld.towerArrayList.add(new SniperTower(new Point((int) x, (int) y)));
+                    gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
                     System.out.println("Tower built");
                     buildingMGTower = false;
                 }
@@ -327,13 +336,13 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         if (!gameWorld.enemyArrayList.isEmpty()) {
             Point enemyLocation = gameWorld.enemyArrayList.get(0).getLocation();
             for (Tower tower: gameWorld.towerArrayList) {
-                if (tower instanceof MachineGunTower) {
+                if ((tower instanceof MachineGunTower) && (counter % 15 == 0)) {
                     double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
                     gameWorld.bulletArrayList.addAll(tower.shoot(heading));
-                } else if ((tower instanceof ShotGunTower) && (counter % 3 == 0)) {
+                } else if ((tower instanceof ShotGunTower) && (counter % 30 == 0)) {
                     double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
                     gameWorld.bulletArrayList.addAll(tower.shoot(heading));
-                } else if ((tower instanceof SniperTower) && (counter % 10 == 0)) {
+                } else if ((tower instanceof SniperTower) && (counter % 60 == 0)) {
                     double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
                     gameWorld.bulletArrayList.addAll(tower.shoot(heading));
                 }
@@ -349,6 +358,23 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                 gameWorld.bulletArrayList.remove(bullet);
             }
         }
+    }
+
+    private void collisionCheck() {
+        for (Bullet bullet : gameWorld.bulletArrayList) {
+            for (Enemy enemy : gameWorld.enemyArrayList) {
+                if (distance(bullet.location, enemy.location) < 20) {
+                    enemy.takeDamage(bullet.getDamage());
+                    //gameWorld.bulletArrayList.remove(bullet);
+                }
+            }
+        }
+    }
+
+    private double distance(Point a, Point b) {
+        double distance = Math.sqrt(Math.pow((a.x - b.x), 2) + Math.pow((a.y - b.y), 2));
+        //System.out.println(distance);
+        return distance;
     }
 
 }

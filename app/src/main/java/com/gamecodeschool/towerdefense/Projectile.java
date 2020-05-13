@@ -31,4 +31,8 @@ class Projectile extends MoveableObject {
         dy = getLocation().y + (Math.sin(Math.toRadians(heading)) * speed);
         setLocation(new Point((int) dx, (int) dy));
     }
+
+    public double getDamage() {
+        return damage;
+    }
 }
