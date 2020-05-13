@@ -19,7 +19,7 @@ public class MachineGunTower extends Tower {
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
         // mCanvas.drawBitmap(mBitmap, location.x * mSize, location.y * mSize, mPaint);
-        mPaint.setColor(Color.CYAN);
+        mPaint.setColor(Color.DKGRAY);
         mCanvas.drawRect(location.x - 40, location.y - 40, location.x + 40, location.y + 40, mPaint);
     }
 
