@@ -25,10 +25,10 @@ public class WaveGenerator {
 
         for(int i = 0; i < 10; i++) {
             int randomNumber = rand.nextInt(100);
-            if(randomNumber <= 70) {
+            if(randomNumber <= 85) {
                 randomWave.add(new BasicAlien(start, context));
             }
-            else if(randomNumber > 70 && randomNumber < 90) {
+            else if(randomNumber > 85 && randomNumber < 90) {
                 randomWave.add(new AlienSpaceship(start, context));
             }
             else {
