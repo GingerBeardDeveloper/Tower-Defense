@@ -18,7 +18,7 @@ class SniperTower extends Tower {
 
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
-        mPaint.setColor(Color.CYAN);
+        mPaint.setColor(Color.LTGRAY);
         mCanvas.drawRect(location.x - 40, location.y - 40, location.x + 40, location.y + 40, mPaint);
     }
 

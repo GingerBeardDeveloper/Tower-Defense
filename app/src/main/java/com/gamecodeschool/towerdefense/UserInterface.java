@@ -59,14 +59,14 @@ public class UserInterface {
         mCanvas.drawText("MG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.80), mPaint);
 
         // SG Tower Button
-        mPaint.setColor(Color.DKGRAY);
+        mPaint.setColor(Color.GRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.58), (float) (width * 0.98), (float) (height * 0.70), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(50);
         mCanvas.drawText("SG Tower", (float) (mCanvas.getWidth() * 0.84), (float) (mCanvas.getHeight() * 0.66), mPaint);
 
         // S Tower Button
-        mPaint.setColor(Color.DKGRAY);
+        mPaint.setColor(Color.LTGRAY);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.44), (float) (width * 0.98), (float) (height * 0.56), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(50);
@@ -75,7 +75,7 @@ public class UserInterface {
 
     // Deals with the pause button and the toggle feature
     public void drawPauseButton(Canvas mCanvas, Paint mPaint, boolean mPaused) {
-        mPaint.setColor(Color.DKGRAY);
+        mPaint.setColor(Color.BLACK);
         mCanvas.drawRect((float) (width * 0.82), (float) (height * 0.86), (float) (width * 0.98), (float) (height * 0.98), mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setTextSize(100);

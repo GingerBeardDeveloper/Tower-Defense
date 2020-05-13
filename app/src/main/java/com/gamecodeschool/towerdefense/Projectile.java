@@ -10,6 +10,7 @@ class Projectile extends MoveableObject {
     private double mSize;
     private RectF rect;
 
+
     // The projectile gets its damage, range, and speed from the tower that instantiates it
     public Projectile(Point location, double damage, double speed) {
         super(location);
