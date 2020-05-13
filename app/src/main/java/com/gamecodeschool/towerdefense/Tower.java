@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import java.util.ArrayList;
 import java.util.List;
 
 abstract class Tower extends GameObject {
@@ -22,5 +23,5 @@ abstract class Tower extends GameObject {
     // Inherits draw function
     abstract void draw(Canvas canvas, Paint paint);
 
-    abstract Bullet shoot(double heading);
+    abstract ArrayList<Bullet> shoot(double heading);
 }

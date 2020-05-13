@@ -25,6 +25,10 @@ public class BasicAlien extends Enemy {
         mBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.basicalien);
     }
 
+    public BasicAlien(Point startOfPath) {
+        super(startOfPath);
+    }
+
 
     public void move() {
         super.move();

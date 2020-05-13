@@ -7,27 +7,29 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 
-public class MachineGunTower extends Tower {
+class ShotGunTower extends Tower {
 
-    public MachineGunTower(Point location) {
+    public ShotGunTower(Point location) {
         super(location);
-        this.damage = 50;
+        this.damage = 10;
         this.range = 20;
         this.speed = 50;
     }
 
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
-        // mCanvas.drawBitmap(mBitmap, location.x * mSize, location.y * mSize, mPaint);
         mPaint.setColor(Color.CYAN);
         mCanvas.drawRect(location.x - 40, location.y - 40, location.x + 40, location.y + 40, mPaint);
     }
 
-    // Send a new projectile in the air
-    public ArrayList<Bullet> shoot(double heading) {
+    @Override
+    ArrayList<Bullet> shoot(double heading) {
         ArrayList<Bullet> bulletsToShoot = new ArrayList<Bullet>();
         bulletsToShoot.add(new MachineGunBullets(location, heading, damage, speed));
+        bulletsToShoot.add(new MachineGunBullets(location, heading + 10, damage, speed));
+        bulletsToShoot.add(new MachineGunBullets(location, heading + 5, damage, speed));
+        bulletsToShoot.add(new MachineGunBullets(location, heading - 10, damage, speed));
+        bulletsToShoot.add(new MachineGunBullets(location, heading - 5, damage, speed));
         return bulletsToShoot;
     }
-
 }

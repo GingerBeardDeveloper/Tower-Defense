@@ -266,7 +266,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 // if building tower and tapping in green area of map, tower is created
                 if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
                     // Build new tower
-                    gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
+                    gameWorld.towerArrayList.add(new ShotGunTower(new Point((int) x, (int) y)));
                     System.out.println("Tower built");
                     buildingMGTower = false;
                 }
@@ -316,8 +316,13 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         if (!gameWorld.enemyArrayList.isEmpty()) {
             Point enemyLocation = gameWorld.enemyArrayList.get(0).getLocation();
             for (Tower tower: gameWorld.towerArrayList) {
-                double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
-                gameWorld.bulletArrayList.add(tower.shoot(heading));
+                if (tower instanceof MachineGunTower) {
+                    double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
+                    gameWorld.bulletArrayList.addAll(tower.shoot(heading));
+                } else if ((tower instanceof ShotGunTower) && (counter % 3 == 0)) {
+                    double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
+                    gameWorld.bulletArrayList.addAll(tower.shoot(heading));
+                }
             }
         }
     }
