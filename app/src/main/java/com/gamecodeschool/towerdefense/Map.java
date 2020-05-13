@@ -12,4 +12,6 @@ abstract class Map {
     int heading;
 
     abstract void draw(Canvas mCanvas);
+
+    public abstract ArrayList<Enemy> getCurrentWaveOfEnemies(int waveNumber);
 }
