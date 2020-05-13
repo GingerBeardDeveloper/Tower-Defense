@@ -17,6 +17,8 @@ public class UserInterface {
 
     public UserInterface(int lives, int gold, boolean paused) {
         this.numLives = lives;
+        //comment
+
         this.gold = gold;
         this.paused = paused;
     }
