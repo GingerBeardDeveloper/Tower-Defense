@@ -17,6 +17,7 @@ public class BasicAlien extends Enemy {
         super(location);
         this.hp = 100;
         this.speed = 6;
+        this.goldValue = 50;
         this.alive = true;
         this.heading = 0.0;
         Bitmap basicAlien = BitmapFactory.decodeResource(context.getResources(), R.drawable.basicalien);

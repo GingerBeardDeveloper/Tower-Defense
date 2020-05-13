@@ -7,6 +7,8 @@ abstract class Enemy extends MoveableObject {
     protected double hp;
     protected boolean alive;
     protected int speed;
+    public int goldValue;
+
     // private double armor: may be implemented at a later stage in development
 
     // Enemies typically spawn at the beginning of the path

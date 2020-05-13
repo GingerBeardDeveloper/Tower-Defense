@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HardMap extends Map {
 
-    ArrayList<Wave> alienWaves;
+    //ArrayList<Wave> alienWaves;
     Paint pathPaint;
     private ArrayList<ArrayList<Enemy>> listOfEnemies = new ArrayList<ArrayList<Enemy>>();
     Point startOfPath;
@@ -22,7 +22,7 @@ public class HardMap extends Map {
         //end = new Point((int) (mCanvas.getWidth() * 0.2),mCanvas.getHeight() / 2);
         pathPaint = new Paint();
         pathPaint.setColor(Color.GRAY);
-        alienWaves = new ArrayList<Wave>();
+      //  alienWaves = new ArrayList<Wave>();
       //  setupWaves(1);
         //startOfPath = new Point(0, (int)(mCanvas.getHeight() * 0.5));
         //endOfPath = new Point((int)(mCanvas.getWidth() * 0.8), (int)(mCanvas.getHeight() * 0.5));

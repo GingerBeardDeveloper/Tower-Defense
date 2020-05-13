@@ -12,8 +12,9 @@ public class AlienSpaceship extends Enemy {
 
     public AlienSpaceship(Point location, Context context) {
         super(location);
-        this.hp = 1000;
+        this.hp = 500;
         this.speed = 3;
+        this.goldValue = 200;
         this.alive = true;
         this.heading = 0.0;
         Bitmap basicAlien = BitmapFactory.decodeResource(context.getResources(), R.drawable.alienspaceship);

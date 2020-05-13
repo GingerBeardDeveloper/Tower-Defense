@@ -405,6 +405,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             for (Enemy enemy : gameWorld.enemyArrayList) {
                 if (distance(bullet.location, enemy.location) < 20) {
                     enemy.takeDamage(bullet.getDamage());
+                    if(!enemy.alive) {
+                        gold+= enemy.goldValue;
+                    }
                     bullet.collide();
                 }
             }

@@ -13,9 +13,10 @@ public class SupremeAlien extends Enemy {
 
     public SupremeAlien(Point location, Context context) {
         super(location);
-        this.hp = 500;
+        this.hp = 300;
         this.speed = 5;
         this.alive = true;
+        this.goldValue = 100;
         this.heading = 0.0;
         Bitmap basicAlien = BitmapFactory.decodeResource(context.getResources(), R.drawable.supremealien);
         Bitmap resized = Bitmap.createScaledBitmap(basicAlien, (int)(basicAlien.getWidth()*.1), (int)(basicAlien.getHeight()*.1), true);
