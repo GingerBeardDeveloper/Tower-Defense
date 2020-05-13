@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 
 import androidx.annotation.RequiresApi;
 
+import static android.graphics.BlendMode.COLOR;
 import static android.util.Log.e;
 
 
@@ -33,11 +34,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private int waveNumber;
 
     // Objects for drawing
-    private Grid grid;
     private Canvas mCanvas;
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
-
 
     // Attributes to deal with start/pause/UI
     private UserInterface mUserInterface;
@@ -57,7 +56,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         super(context);
         this.context = context;
         this.size = size;
-        this.grid = new Grid(size);
         this.waveNumber = 1;
         mPaused = true;
         mStarted = false;
@@ -217,22 +215,30 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             }
 
             // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
+            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver, waveNumber);
 
             // TODO: Draw the text for when the game is paused
             if (!mStarted) {
+                mPaint.setColor(Color.BLACK);
+                mPaint.setTextSize(75);
                 mCanvas.drawText("To start game, press PLAY", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
             if (mPaused && mStarted && !gameOver && !waveCleared) {
+                mPaint.setColor(Color.BLACK);
+                mPaint.setTextSize(75);
                 mCanvas.drawText("Currently Paused", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
             if (buildingMGTower || buildingSGTower || buildingSTower) {
+                mPaint.setColor(Color.BLACK);
+                mPaint.setTextSize(75);
                 mCanvas.drawText("Please place tower", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.9), mPaint);
             }
 
             if (waveCleared) {
+                mPaint.setColor(Color.BLACK);
+                mPaint.setTextSize(50);
                 mCanvas.drawText("Wave Completed! Prepare for the next wave! ", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
             }
 
@@ -297,6 +303,8 @@ class TowerDefenseGame extends SurfaceView implements Runnable
                     if (gold >= 200) {
                         gameWorld.towerArrayList.add(new MachineGunTower(new Point((int) x, (int) y)));
                         gold -= 200;
+                    } else{
+
                     }
                     buildingMGTower = false;
                 } else if (buildingSGTower) {

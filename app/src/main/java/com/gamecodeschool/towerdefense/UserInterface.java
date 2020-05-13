@@ -21,9 +21,10 @@ public class UserInterface {
         this.paused = paused;
     }
 
-    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean mPaused, boolean gameOver) {
+    public void draw(Canvas mCanvas, Paint mPaint, int lives, int gold, boolean mPaused, boolean gameOver, int waveNumber) {
         height = mCanvas.getHeight();
         width = mCanvas.getWidth();
+
 
         // Draw rectangle on right 20% of screen for UI
         mPaint.setColor(Color.WHITE);
@@ -31,7 +32,7 @@ public class UserInterface {
         mPaint.setTextSize(40);
         mPaint.setColor(Color.BLACK);
         if(lives > 0 && !gameOver) {
-            drawLivesAndGold(mCanvas, mPaint, lives, gold);
+            drawLivesAndGold(mCanvas, mPaint, lives, gold, waveNumber);
         }
         else {
             drawNewGameText(mCanvas, mPaint);
@@ -40,6 +41,7 @@ public class UserInterface {
 
         // Build basic tower
         drawTowerBuilder(mCanvas, mPaint);
+
     }
 
     private void drawNewGameText(Canvas mCanvas, Paint mPaint) {
@@ -89,9 +91,10 @@ public class UserInterface {
         }
     }
 
-    public void drawLivesAndGold(Canvas mCanvas, Paint mPaint, int lives, int gold) {
+    public void drawLivesAndGold(Canvas mCanvas, Paint mPaint, int lives, int gold, int waveNumber) {
         mCanvas.drawText("Lives: " + lives, (float) (width * 0.82), (float) (height * 0.05), mPaint);
         mCanvas.drawText("Gold: " + gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
+        mCanvas.drawText("Wave Number: " + waveNumber, (float) (width * 0.82), (float) (height * 0.15), mPaint);
     }
 
 }
