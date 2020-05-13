@@ -151,12 +151,22 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         counter++;
         // TODO: Make all enemies move while towers attack
         // If enemy reached the end of the static path, decrement userLives
-        for(Enemy enemy: gameWorld.enemyArrayList.get(waveNumber)) {
+        /*for(Enemy enemy: gameWorld.enemyArrayList.get(waveNumber)) {
             enemy.move();
             // After they move, if they reached end of path, decrement lives
             if (enemy.getLocation().x > 1440) {
-                gameWorld.enemyArrayList.remove(enemy);
+                gameWorld.enemyArrayList.get(waveNumber).remove(enemy);
                 lives--;
+            }
+        }*/
+        for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
+            for(int j = 0; j < gameWorld.enemyArrayList.get(waveNumber).size(); j++) {
+                Enemy e = gameWorld.enemyArrayList.get(waveNumber).get(j);
+                e.move();
+                if (e.getLocation().x > 1440) {
+                    gameWorld.enemyArrayList.get(waveNumber).remove(e);
+                    lives--;
+                }
             }
         }
 
