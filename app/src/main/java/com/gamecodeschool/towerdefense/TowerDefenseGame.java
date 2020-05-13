@@ -118,7 +118,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
     // Check to see if it is time for an update
     public boolean updateRequired() {
         // Run at 10 frames per second
-        final long TARGET_FPS = 10;
+        final long TARGET_FPS = 60;
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
 
@@ -174,6 +174,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
         // Lock the canvas, do a drawing, and at the end, present it
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
+            mCanvas.drawColor(Color.WHITE);
 
             // TODO: Draw the Grid
             //grid.draw(mCanvas, mPaint);
@@ -266,7 +267,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 // if building tower and tapping in green area of map, tower is created
                 if (y < ((mCanvas.getHeight() / 2.0) - 40) || y > ((mCanvas.getHeight() / 2.0) + 40)) {
                     // Build new tower
-                    gameWorld.towerArrayList.add(new ShotGunTower(new Point((int) x, (int) y)));
+                    gameWorld.towerArrayList.add(new SniperTower(new Point((int) x, (int) y)));
                     System.out.println("Tower built");
                     buildingMGTower = false;
                 }
@@ -322,6 +323,9 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 } else if ((tower instanceof ShotGunTower) && (counter % 3 == 0)) {
                     double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
                     gameWorld.bulletArrayList.addAll(tower.shoot(heading));
+                } else if ((tower instanceof SniperTower) && (counter % 10 == 0)) {
+                    double heading = Math.toDegrees(Math.atan2(enemyLocation.y - tower.location.y, enemyLocation.x - tower.location.x));
+                    gameWorld.bulletArrayList.addAll(tower.shoot(heading));
                 }
             }
         }
@@ -336,4 +340,5 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             }
         }
     }
+
 }

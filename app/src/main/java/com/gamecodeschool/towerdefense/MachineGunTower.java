@@ -13,7 +13,7 @@ public class MachineGunTower extends Tower {
         super(location);
         this.damage = 50;
         this.range = 20;
-        this.speed = 50;
+        this.speed = 20;
     }
 
     @Override

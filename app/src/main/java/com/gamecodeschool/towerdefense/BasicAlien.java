@@ -18,7 +18,7 @@ public class BasicAlien extends Enemy {
     public BasicAlien(Point location, Context context) {
         super(location);
         this.hp = 100;
-        this.speed = 20;
+        this.speed = 10;
         this.alive = true;
         this.heading = 0.0;
         mRect = new RectF(location.x - 20, location.y , location.x + 20, location.y);

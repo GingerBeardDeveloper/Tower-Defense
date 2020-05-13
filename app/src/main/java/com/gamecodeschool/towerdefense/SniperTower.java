@@ -7,13 +7,13 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 
-class ShotGunTower extends Tower {
+class SniperTower extends Tower {
 
-    public ShotGunTower(Point location) {
+    public SniperTower(Point location) {
         super(location);
-        this.damage = 10;
+        this.damage = 100;
         this.range = 20;
-        this.speed = 20;
+        this.speed = 40;
     }
 
     @Override
@@ -26,10 +26,6 @@ class ShotGunTower extends Tower {
     ArrayList<Bullet> shoot(double heading) {
         ArrayList<Bullet> bulletsToShoot = new ArrayList<Bullet>();
         bulletsToShoot.add(new MachineGunBullets(location, heading, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading + 10, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading + 5, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading - 10, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading - 5, damage, speed));
         return bulletsToShoot;
     }
 }
