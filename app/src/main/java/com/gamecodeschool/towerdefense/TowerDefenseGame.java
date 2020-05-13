@@ -20,7 +20,8 @@ import java.util.List;
 import static android.util.Log.e;
 
 
-class TowerDefenseGame extends SurfaceView implements Runnable {
+class TowerDefenseGame extends SurfaceView implements Runnable
+{
 
     // Objects for the game loop/thread
     private Thread mThread = null;
@@ -158,7 +159,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
                 gameWorld.enemyArrayList.get(waveNumber).remove(enemy);
                 lives--;
             }
-<<<<<<< HEAD
         }
 
         // Check if there are enemies on the screen and shoot if they exist
@@ -174,7 +174,6 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             if (gameWorld.enemyArrayList.get(i).getLocation().x > 1440) {
                 gameWorld.enemyArrayList.remove(i);
                 lives--;
-=======
         }*/
         for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
             for(int j = 0; j < gameWorld.enemyArrayList.get(waveNumber).size(); j++) {
@@ -212,41 +211,42 @@ class TowerDefenseGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(120);
 
             // Draw every tower.
-            for(Tower t: gameWorld.towerArrayList) {
+            for (Tower t : gameWorld.towerArrayList) {
                 t.draw(mCanvas, mPaint);
             }
 
             // Draw the bullets
-            for(Bullet bullet: gameWorld.bulletArrayList) {
+            for (Bullet bullet : gameWorld.bulletArrayList) {
                 bullet.draw(mCanvas, mPaint);
             }
 
             // Draw the enemies
-            for(Enemy enemy: gameWorld.enemyArrayList) {
-            // TODO: Draw the enemies
-            for(Enemy enemy: gameWorld.enemyArrayList.get(waveNumber)) {
+            for (ArrayList<Enemy> list : gameWorld.enemyArrayList) {
+                // TODO: Draw the enemies
+                for (Enemy enemy : gameWorld.enemyArrayList.get(waveNumber)) {
 
-                enemy.draw(mCanvas, mPaint);
+                    enemy.draw(mCanvas, mPaint);
+                }
+
+                // Draw the UI with number of Lives left, pause button
+                mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
+
+                // TODO: Draw the text for when the game is paused
+                if (!mStarted) {
+                    mCanvas.drawText("To start game, press PLAY", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
+                }
+
+                if (mPaused && mStarted) {
+                    mCanvas.drawText("Currently Paused", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
+                }
+
+                if (buildingMGTower) {
+                    mCanvas.drawText("Please place tower", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.9), mPaint);
+                }
+
+                // Unlock the mCanvas and reveal the graphics for this frame
+                mSurfaceHolder.unlockCanvasAndPost(mCanvas);
             }
-
-            // Draw the UI with number of Lives left, pause button
-            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
-
-            // TODO: Draw the text for when the game is paused
-            if(!mStarted) {
-                mCanvas.drawText("To start game, press PLAY", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
-            }
-
-            if(mPaused && mStarted) {
-                mCanvas.drawText("Currently Paused", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.5), mPaint);
-            }
-
-            if(buildingMGTower) {
-                mCanvas.drawText("Please place tower", (float)(mCanvas.getWidth() * 0.3), (float)(mCanvas.getHeight() * 0.9), mPaint);
-            }
-
-            // Unlock the mCanvas and reveal the graphics for this frame
-            mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
 
