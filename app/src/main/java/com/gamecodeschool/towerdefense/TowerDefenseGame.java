@@ -149,18 +149,18 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     // Purpose of this method is to move all of the movable objects in the game. The 'visual' of each thing is not drawn here. Just the underlying features
     // After moving all objects, checks to see if gold is earned, or if specific events occur
     public void update() {
-        counter++;
-        // TODO: Make all enemies move while towers attack
-        // If enemy reached the end of the static path, decrement userLives
-        /*for(Enemy enemy: gameWorld.enemyArrayList.get(waveNumber)) {
-            enemy.move();
-            // After they move, if they reached end of path, decrement lives
-            if (enemy.getLocation().x > 1440) {
-                gameWorld.enemyArrayList.get(waveNumber).remove(enemy);
+        // TODO: If enemy reached the end of the static path, decrement userLives
+        for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
+            Enemy e = gameWorld.enemyArrayList.get(i);
+            e.move();
+            if (e.getLocation().x > 1440) {
+                gameWorld.enemyArrayList.remove(e);
                 lives--;
             }
         }
 
+
+        /*
         // Check if there are enemies on the screen and shoot if they exist
         shootTowers();
 
@@ -168,29 +168,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         for(Bullet bullet: gameWorld.bulletArrayList) {
             bullet.move();
         }
+        */
 
-        // TODO: If enemy reached the end of the static path, decrement userLives
-        for (int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
-            if (gameWorld.enemyArrayList.get(i).getLocation().x > 1440) {
-                gameWorld.enemyArrayList.remove(i);
-                lives--;
-        }*/
-        for(int i = 0; i < gameWorld.enemyArrayList.size(); i++) {
-            for(int j = 0; j < gameWorld.enemyArrayList.size(); j++) {
-                Enemy e = gameWorld.enemyArrayList.get(j);
-                e.move();
-                if (e.getLocation().x > 1440) {
-                    gameWorld.enemyArrayList.remove(e);
-                    lives--;
-                }
-            }
-        }
-
+        // TODO: If the wave is empty, increment it
 
         // TODO: If we ran out of Lives, then the user loses. End Game
         if(lives == 0) {
             gameOver = true;
         }
+
     }
 
     // Do all the drawing (interface) for the application
@@ -223,29 +209,29 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             // Draw the enemies
             //for (ArrayList<Enemy> list : gameWorld.enemyArrayList) {
                 // TODO: Draw the enemies
-                for (Enemy enemy : gameWorld.enemyArrayList) {
-                    enemy.draw(mCanvas, mPaint);
-                }
-
-                // Draw the UI with number of Lives left, pause button
-                mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
-
-                // TODO: Draw the text for when the game is paused
-                if (!mStarted) {
-                    mCanvas.drawText("To start game, press PLAY", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
-                }
-
-                if (mPaused && mStarted) {
-                    mCanvas.drawText("Currently Paused", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
-                }
-
-                if (buildingMGTower) {
-                    mCanvas.drawText("Please place tower", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.9), mPaint);
-                }
-
-                // Unlock the mCanvas and reveal the graphics for this frame
-                mSurfaceHolder.unlockCanvasAndPost(mCanvas);
+            for (Enemy enemy : gameWorld.enemyArrayList) {
+                enemy.draw(mCanvas, mPaint);
             }
+
+            // Draw the UI with number of Lives left, pause button
+            mUserInterface.draw(mCanvas, mPaint, lives, gold, mPaused, gameOver);
+
+            // TODO: Draw the text for when the game is paused
+            if (!mStarted) {
+                mCanvas.drawText("To start game, press PLAY", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
+            }
+
+            if (mPaused && mStarted) {
+                mCanvas.drawText("Currently Paused", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.5), mPaint);
+            }
+
+            if (buildingMGTower) {
+                mCanvas.drawText("Please place tower", (float) (mCanvas.getWidth() * 0.3), (float) (mCanvas.getHeight() * 0.9), mPaint);
+            }
+
+            // Unlock the mCanvas and reveal the graphics for this frame
+            mSurfaceHolder.unlockCanvasAndPost(mCanvas);
+        }
     }
 
 
