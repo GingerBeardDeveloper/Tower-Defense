@@ -117,6 +117,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     }
 
     // Handles the game loop
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void run() {
         while (mPlaying) {
