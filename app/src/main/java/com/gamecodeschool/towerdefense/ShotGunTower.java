@@ -25,11 +25,11 @@ class ShotGunTower extends Tower {
     @Override
     ArrayList<Bullet> shoot(double heading) {
         ArrayList<Bullet> bulletsToShoot = new ArrayList<Bullet>();
-        bulletsToShoot.add(new MachineGunBullets(location, heading, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading + 10, damage, speed));
-        //bulletsToShoot.add(new MachineGunBullets(location, heading + 5, damage, speed));
-        bulletsToShoot.add(new MachineGunBullets(location, heading - 10, damage, speed));
-        //bulletsToShoot.add(new MachineGunBullets(location, heading - 5, damage, speed));
+        bulletsToShoot.add(new SGBullets(location, heading, damage, speed));
+        bulletsToShoot.add(new SGBullets(location, heading + 10, damage, speed));
+        //bulletsToShoot.add(new SGBullets(location, heading + 5, damage, speed));
+        bulletsToShoot.add(new SGBullets(location, heading - 10, damage, speed));
+        //bulletsToShoot.add(new SGBullets(location, heading - 5, damage, speed));
         return bulletsToShoot;
     }
 }
