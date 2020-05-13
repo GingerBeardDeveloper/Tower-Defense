@@ -94,11 +94,4 @@ public class UserInterface {
         mCanvas.drawText("Gold: " + gold, (float) (width * 0.82), (float) (height * 0.1), mPaint);
     }
 
-    public void togglePauseButton() {
-        this.paused = !this.paused;
-    }
-
-    public void decrementLives() {
-        this.numLives--;
-    }
 }

@@ -211,8 +211,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             }
 
             // Draw the enemies
-            //for (ArrayList<Enemy> list : gameWorld.enemyArrayList) {
-                // TODO: Draw the enemies
+            // TODO: Draw the enemies
             for (Enemy enemy : gameWorld.enemyArrayList) {
                 enemy.draw(mCanvas, mPaint);
             }
@@ -354,6 +353,10 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         }
         return false;
     }
+
+    /*private boolean twiceSpeed(float x, float y) {
+
+    }*/
 
     // Stop the thread
     public void pause() {

@@ -1,12 +1,9 @@
 package com.gamecodeschool.towerdefense;
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.RectF;
 
 public class MachineGunBullets extends Bullet {
 

@@ -26,15 +26,9 @@ public class AlienSpaceship extends Enemy {
         super.move();
     }
 
-    public void setStartPosition(Point startPosition) {
-        setLocation(startPosition);
-    }
-
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
-        //mPaint.setColor(Color.RED);
         RectF mRect = new RectF(location.x-50, location.y-300, location.x + 50, location.y);
-        //mCanvas.drawRect(mRect, mPaint);
         mCanvas.drawBitmap(this.mBitmap, mRect.left, mRect.top, mPaint);
     }
 }

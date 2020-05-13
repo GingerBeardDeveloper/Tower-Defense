@@ -29,10 +29,6 @@ public class BasicAlien extends Enemy {
         super.move();
     }
 
-    public void setStartPosition(Point startPosition) {
-        setLocation(startPosition);
-    }
-
     @Override
     void draw(Canvas mCanvas, Paint mPaint) {
         RectF mRect = new RectF(location.x-50, location.y-90, location.x + 50, location.y + 90);
