@@ -11,7 +11,7 @@ class SniperTower extends Tower {
 
     public SniperTower(Point location) {
         super(location);
-        this.damage = 50;
+        this.damage = 75;
         this.range = 20;
         this.speed = 15;
     }
@@ -25,7 +25,7 @@ class SniperTower extends Tower {
     @Override
     ArrayList<Bullet> shoot(double heading) {
         ArrayList<Bullet> bulletsToShoot = new ArrayList<Bullet>();
-        bulletsToShoot.add(new MachineGunBullets(location, heading, damage, speed));
+        bulletsToShoot.add(new SniperBullet(location, heading, damage, speed));
         return bulletsToShoot;
     }
 }

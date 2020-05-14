@@ -5,9 +5,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-public class MachineGunBullets extends Bullet {
+class SniperBullet extends Bullet {
 
-    public MachineGunBullets(Point location, double heading, double damage, double speed) {
+    public SniperBullet(Point location, double heading, double damage, double speed) {
         super(location, damage, speed);
         this.heading = heading;
     }
@@ -15,8 +15,7 @@ public class MachineGunBullets extends Bullet {
     void draw(Canvas mCanvas, Paint mPaint) {
         mPaint.setColor(Color.RED);
         mCanvas.drawCircle(location.x, location.y, 6, mPaint);
-        mPaint.setColor(Color.DKGRAY);
+        mPaint.setColor(Color.LTGRAY);
         mCanvas.drawCircle(location.x, location.y, 5, mPaint);
     }
-
 }

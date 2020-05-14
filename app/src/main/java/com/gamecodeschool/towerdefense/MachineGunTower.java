@@ -11,7 +11,7 @@ public class MachineGunTower extends Tower {
 
     public MachineGunTower(Point location) {
         super(location);
-        this.damage = 20;
+        this.damage = 30;
         this.range = 20;
         this.speed = 6;
     }

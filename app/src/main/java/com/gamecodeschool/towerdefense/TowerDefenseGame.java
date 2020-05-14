@@ -422,7 +422,19 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private void collisionCheck() {
         for (Bullet bullet : gameWorld.bulletArrayList) {
             for (Enemy enemy : gameWorld.enemyArrayList) {
-                if (distance(bullet.location, enemy.location) < 20) {
+                if (enemy instanceof BasicAlien && (distance(bullet.location, enemy.location) < 30)) {
+                    enemy.takeDamage(bullet.getDamage());
+                    if(!enemy.alive) {
+                        gold+= enemy.goldValue;
+                    }
+                    bullet.collide();
+                } else if (enemy instanceof SupremeAlien && (distance(bullet.location, enemy.location) < 40)) {
+                    enemy.takeDamage(bullet.getDamage());
+                    if(!enemy.alive) {
+                        gold+= enemy.goldValue;
+                    }
+                    bullet.collide();
+                } else if (enemy instanceof AlienSpaceship && (distance(bullet.location, enemy.location) < 100)) {
                     enemy.takeDamage(bullet.getDamage());
                     //this.soundCtx.getStrategy().playEatAppleSound();
                     if(!enemy.alive) {
