@@ -2,7 +2,7 @@ package com.gamecodeschool.towerdefense;
 
 import android.util.Log;
 import android.view.SurfaceView;
-
+import android.content.res.AssetManager;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -48,7 +48,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
     private boolean buildingMGTower;
     private boolean buildingSGTower;
     private boolean buildingSTower;
-
+    private SoundContext soundCtx;
     // List of GameObjects
     private GameWorld gameWorld;
 
@@ -61,7 +61,15 @@ class TowerDefenseGame extends SurfaceView implements Runnable
         mStarted = false;
 
         // TODO: Add Sound Strategy Later
-
+        // Initialize the SoundPool
+        this.soundCtx = new SoundContext();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            soundCtx.setSoundStrategy(new PostLollipopSound());
+        } else {
+            soundCtx.setSoundStrategy(new PreLollipopSound());
+        }
+        AssetManager assetManager = context.getAssets();
+        soundCtx.getStrategy().prepareSounds(assetManager);
         // TODO: Insert Game Objects Initialization Here
         gameMap = new HardMap(mCanvas);
         lives = 10;
@@ -416,6 +424,7 @@ class TowerDefenseGame extends SurfaceView implements Runnable
             for (Enemy enemy : gameWorld.enemyArrayList) {
                 if (distance(bullet.location, enemy.location) < 20) {
                     enemy.takeDamage(bullet.getDamage());
+                    //this.soundCtx.getStrategy().playEatAppleSound();
                     if(!enemy.alive) {
                         gold+= enemy.goldValue;
                     }
